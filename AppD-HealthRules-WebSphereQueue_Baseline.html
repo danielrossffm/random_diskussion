@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Health Rules WebSphereQueue_1 und WebSphereQueue_1141 — Umstellung auf Baseline</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 10mm 14mm;
+  }
+
+  :root {
+    --ink:      #16202e;
+    --ink-soft: #4a5568;
+    --ink-mute: #7b8698;
+    --accent:   #1f4e79;
+    --rule:     #d3d8e0;
+    --rule-soft:#e6e9ee;
+    --band:     #f4f6f9;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    font-family: "Liberation Sans", "DejaVu Sans", sans-serif;
+    font-size: 7.4pt;
+    line-height: 1.42;
+    color: var(--ink);
+    hyphens: auto;
+  }
+  body { margin: 0; }
+
+  /* ---------- Kopfzeile ---------- */
+  .masthead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 2.6mm;
+    border-bottom: 0.9pt solid var(--accent);
+  }
+  .masthead img { height: 8.6mm; width: auto; display: block; }
+  .meta {
+    text-align: right;
+    font-size: 6.6pt;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .meta .stamp { color: var(--ink); font-weight: 700; }
+
+  h1 {
+    margin: 4.0mm 0 0;
+    font-size: 12.8pt;
+    line-height: 1.22;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    color: var(--accent);
+    max-width: 158mm;
+  }
+
+  /* ---------- Abschnitte ---------- */
+  section { margin-top: 4.4mm; }
+
+  h2 {
+    margin: 0 0 2.0mm;
+    font-size: 8.2pt;
+    font-weight: 700;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 1.1mm;
+    border-bottom: 0.6pt solid var(--rule);
+  }
+  h2 .num {
+    display: inline-block;
+    min-width: 4.6mm;
+    color: var(--ink-mute);
+    font-weight: 700;
+  }
+
+  .lede { margin: 0 0 2.6mm; color: var(--ink-soft); max-width: 170mm; }
+
+  /* ---------- Tabelle ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 6.9pt;
+    line-height: 1.34;
+    table-layout: fixed;
+  }
+  col.c1 { width: 27%; }
+  col.c2 { width: 36.5%; }
+  col.c3 { width: 36.5%; }
+
+  thead th {
+    text-align: left;
+    font-size: 6.5pt;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 1.2mm 2.0mm;
+    border-bottom: 0.8pt solid var(--accent);
+    vertical-align: bottom;
+  }
+  thead th:first-child { color: var(--ink-mute); }
+
+  tbody th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--ink-soft);
+    padding: 0.9mm 2.0mm;
+    border-bottom: 0.4pt solid var(--rule-soft);
+    vertical-align: top;
+  }
+  tbody td {
+    padding: 0.9mm 2.0mm;
+    border-bottom: 0.4pt solid var(--rule-soft);
+    vertical-align: top;
+    overflow-wrap: break-word;
+  }
+  tbody tr:nth-child(even) th,
+  tbody tr:nth-child(even) td { background: var(--band); }
+  tbody tr:last-child th,
+  tbody tr:last-child td { border-bottom: 0.8pt solid var(--rule); }
+
+  .uri {
+    font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 6.0pt;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .val-strong { font-weight: 700; }
+
+  /* ---------- Abbildung ---------- */
+  figure { margin: 2.8mm 0 0; }
+  figure img {
+    display: block;
+    width: 75%;
+    margin: 0 auto;
+    height: auto;
+    border: 0.5pt solid var(--rule);
+  }
+  figcaption {
+    width: 75%;
+    margin: 1.3mm auto 0;
+    font-size: 6.4pt;
+    font-style: italic;
+    color: var(--ink-mute);
+  }
+
+  /* ---------- Zweispaltiger Fuß ---------- */
+  .split {
+    display: flex;
+    gap: 7mm;
+    margin-top: 3.4mm;
+    font-size: 6.8pt;
+    line-height: 1.37;
+  }
+  .split > .col-narrow { width: 29%; }
+  .split > .col-wide   { width: 71%; }
+  .split section { margin-top: 0; }
+  .col-wide dl {
+    column-count: 2;
+    column-gap: 6mm;
+    text-align: justify;
+  }
+
+
+  ul.plain { margin: 0; padding: 0; list-style: none; }
+  ul.plain li {
+    position: relative;
+    padding-left: 3.0mm;
+    margin-bottom: 1.5mm;
+    color: var(--ink-soft);
+  }
+  ul.plain li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.05mm;
+    width: 1.15mm;
+    height: 1.15mm;
+    background: var(--accent);
+  }
+  ul.plain li:last-child { margin-bottom: 0; }
+  ul.plain .undoc { color: var(--ink-mute); font-style: italic; }
+
+  dl { margin: 0; }
+  dt {
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 1.9mm;
+    break-after: avoid;
+  }
+  dt:first-of-type { margin-top: 0; }
+  dd {
+    margin: 0.35mm 0 0;
+    color: var(--ink-soft);
+  }
+
+  code, .mono { font-family: "DejaVu Sans Mono", "Liberation Mono", monospace; font-size: 0.92em; }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <img src="lets-logo.png" alt="let's scale it">
+    <div class="meta">
+      <div class="stamp">Stand 25.08.2026</div>
+      <div>AppDynamics · KV-Prod</div>
+    </div>
+  </header>
+
+  <h1>Health Rules WebSphereQueue_1 und WebSphereQueue_1141 —<br>Umstellung auf Baseline</h1>
+
+  <section>
+    <h2><span class="num">1</span>Stand heute</h2>
+    <p class="lede">Beide Regeln überwachen die Antwortzeit je einer WebSphere-MQ-Strecke der Anwendung KV-Prod und vergleichen sie gegen die von AppDynamics laufend berechnete Baseline.</p>
+
+    <table>
+      <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+      <thead>
+        <tr>
+          <th scope="col">Parameter</th>
+          <th scope="col">WebSphereQueue_1</th>
+          <th scope="col">WebSphereQueue_1141</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Überwachte Entität</th>
+          <td class="uri">IBM Websphere-queue://MQP1/KV.W3KVINNO.REPLY?targetClient=1</td>
+          <td class="uri">IBM Websphere-queue://MQP1/KV.W3KVINNO.REQUEST?CCSID=1141&amp;target…</td>
+        </tr>
+        <tr>
+          <th scope="row">Health Rule Type</th>
+          <td>Databases &amp; Remote Services</td>
+          <td>Databases &amp; Remote Services</td>
+        </tr>
+        <tr>
+          <th scope="row">Metrik</th>
+          <td>Average Response Time (ms)</td>
+          <td>Average Response Time (ms)</td>
+        </tr>
+        <tr>
+          <th scope="row">Vergleich</th>
+          <td class="val-strong">&gt; Baseline</td>
+          <td class="val-strong">&gt; Baseline</td>
+        </tr>
+        <tr>
+          <th scope="row">Baseline</th>
+          <td>Weekly Trend – Last 3 months</td>
+          <td>Weekly Trend – Last 3 months</td>
+        </tr>
+        <tr>
+          <th scope="row">Critical</th>
+          <td class="val-strong">3 Baseline Standard Deviation(s)</td>
+          <td class="val-strong">4 Baseline Standard Deviation(s)</td>
+        </tr>
+        <tr>
+          <th scope="row">Warning</th>
+          <td>2 Baseline Standard Deviation(s)</td>
+          <td>3 Baseline Standard Deviation(s)</td>
+        </tr>
+        <tr>
+          <th scope="row">Persistenz</th>
+          <td>15 von 30 Minuten</td>
+          <td>15 von 30 Minuten</td>
+        </tr>
+        <tr>
+          <th scope="row">Kein Datenempfang</th>
+          <td>Critical / Warning</td>
+          <td>Critical / Warning</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <img src="healthrule-websphere-queue-1-critical.png" alt="Critical Criteria der Regel WebSphereQueue_1">
+      <figcaption>Critical Criteria der Regel WebSphereQueue_1 nach der Umstellung.</figcaption>
+    </figure>
+  </section>
+
+  <div class="split">
+    <div class="col-narrow">
+      <section>
+        <h2><span class="num">2</span>Stand vorher</h2>
+        <ul class="plain">
+          <li>Beide Regeln verglichen gegen einen festen Wert (<code>&gt; Specific Value</code>): <span class="mono">WebSphereQueue_1</span> gegen 18 ms, <span class="mono">WebSphereQueue_1141</span> gegen 4 ms.</li>
+          <li>18 ms wurden werktags morgens im Normalbetrieb regelmäßig überschritten, zuletzt am 17.08.2026 um 06:50 und 07:11 Uhr.</li>
+          <li>4 ms wurden nie erreicht, da die Metrik auf dieser Strecke nur zwischen 0 und 2 ms läuft.</li>
+          <li>Fehlender Datenempfang war auf <code>Unknown</code> gesetzt und löste keine Meldung aus.</li>
+          <li class="undoc">Die vorherigen Warning-Schwellwerte sind nicht dokumentiert.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="col-wide">
+      <section>
+        <h2><span class="num">3</span>Erklärung der neuen Werte</h2>
+        <dl>
+          <dt>&gt; Baseline</dt>
+          <dd>Verglichen wird gegen den Erwartungswert, den AppDynamics laufend aus den eigenen Messwerten berechnet, nicht gegen eine feste Zahl. Der Erwartungswert wandert mit der tatsächlichen Last mit und veraltet dadurch nicht.</dd>
+
+          <dt>Weekly Trend – Last 3 months</dt>
+          <dd>Aus den letzten drei Monaten wird ein Profil je Wochentag und Uhrzeit gebildet. Montag 07:00 Uhr wird nur mit früheren Montagen um 07:00 Uhr verglichen. Notwendig, weil KV-Prod von Sachbearbeitern genutzt wird und Werktage und Wochenende deutlich unterschiedlich aussehen.</dd>
+
+          <dt>3 bzw. 4 Standardabweichungen</dt>
+          <dd>Die Standardabweichung misst, wie stark die Werte üblicherweise um den Erwartungswert schwanken. Drei Standardabweichungen darüber kommen im Normalbetrieb praktisch nicht vor. Auf der REQUEST-Strecke sind vier angesetzt, weil die Metrik dort nur zwischen 0 und 2 ms läuft und die Streuung entsprechend klein ist.</dd>
+
+          <dt>Warning eine Stufe unter Critical</dt>
+          <dd>Die Warnschwelle liegt jeweils eine Standardabweichung niedriger und zeigt eine beginnende Abweichung an.</dd>
+
+          <dt>Persistenz 15 von 30 Minuten</dt>
+          <dd>Die Abweichung muss in mindestens 15 der letzten 30 Minuten vorliegen. Unverändert übernommen. Einzelne Ausreißer lösen dadurch keine Meldung aus.</dd>
+
+          <dt>Kein Datenempfang: Critical</dt>
+          <dd>Über beide Strecken läuft rund um die Uhr Verkehr, auch nachts. Bleiben die Messwerte aus, ist das eine Störung und wird gemeldet. Die Persistenzbedingung gilt auch hier.</dd>
+        </dl>
+      </section>
+    </div>
+  </div>
+
+</body>
+</html>
