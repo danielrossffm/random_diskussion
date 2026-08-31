@@ -1,0 +1,363 @@
+# Scaleworks — Gestaltungssystem
+
+Internes Werkzeug der Lets Scale IT AG. Umsetzung React + Tailwind, nur helles Design.
+Alle Kontrastverhältnisse nach WCAG 2.1 gerechnet (relative Luminanz, sRGB).
+Grenzwerte: Fließtext 4,5:1 · Text ab 24 px bzw. 18,66 px fett 3:1 · Rahmen und Bedienelemente 3:1.
+
+---
+
+## 1 Farben
+
+### 1.1 Corporate Design (unverändert)
+
+| Name | Hex | Verwendung |
+|---|---|---|
+| Schwarz | `#000000` | Fließtext, Überschriften, Hauptknopf, Fokuskontur, Tabellenkopflinie, Kappe erledigter/aktueller Schritte |
+| Grau | `#54595F` | Zweitrangiger Text, Grundlagenzeile, Hinweiszeile im Formular, Rahmen von Eingabefeldern, Sekundärknopf-Rahmen |
+| Text-Grau | `#7A7A7A` | **Nur** Platzhalter, gesperrte Beschriftung, gesperrter Knopftext. Nicht für Fließtext (siehe 1.4) |
+| Akzent Gold | `#9F9069` | Linkunterstreichung, Dreieck des Aufklappers, linke Kante der Hinweis-Meldung, Trennlinie unter dem Dokumentkopf |
+| Gold warm | `#AE975A` | Ausschließlich Fläche der Marke des **aktuellen** Schritts |
+| Gold sehr hell | `#F3F0E8` | Seitenfläche, Fläche der Hinweis-Meldung, Fläche der aktuellen Schrittzelle, Tabellenzeile beim Überfahren, Sekundärknopf beim Überfahren |
+| Gold-Rand | `#DCD5C2` | Kartenrand, Tabellenzeilenlinie, Trennlinien in der Karte, Rahmen gesperrter Bedienelemente |
+| Weiß | `#FFFFFF` | Kartenfläche, Eingabefläche, Text auf Schwarz |
+
+### 1.2 Urteilsfamilie (neu, außerhalb des Goldes)
+
+Drei Töne auf einem gemeinsamen Helligkeitsband (5,8–6,6:1 auf Weiß), deutlich gesättigter als das Gold
+und in drei klar getrennten Farbwinkeln (≈150° / ≈36° / ≈8°). Jeder Ton mit heller Fläche und Randton.
+
+| Rolle | Text/Linie | Fläche | Rand |
+|---|---|---|---|
+| bestanden | `#3A6B54` | `#EDF3EF` | `#C3D8CB` |
+| Vorbehalt / nicht entscheidbar | `#8A5B1C` | `#FBF0DF` | `#E8D5B4` |
+| durchgefallen | `#A33A32` | `#F9EDEB` | `#EDCFC9` |
+| neutral (kein Urteil gefällt) | `#54595F` | `#EFEFEE` | `#D8D6D0` |
+
+### 1.3 Bedienfarben (keine Urteile)
+
+| Name | Hex | Verwendung |
+|---|---|---|
+| Gefahr | `#7E2B24` | Ausschließlich zerstörende Knöpfe. Bewusst dunkler als das Urteilsrot, damit „Aktion“ und „Ergebnis“ nie verwechselt werden |
+| Schwarz überfahren | `#2E2A22` | Hauptknopf im Überfahren-Zustand (warmes Schwarz, passt zum Goldgrund) |
+
+### 1.4 Gemessene Kontraste
+
+| Vordergrund | Fläche | Verhältnis | Verwendung | Bewertung |
+|---|---|---|---|---|
+| `#000000` | `#FFFFFF` | 21,00:1 | Fließtext, Überschriften | AAA |
+| `#54595F` | `#FFFFFF` | 7,07:1 | Zweitrangiger Text, Grundlagenzeile | AAA |
+| `#7A7A7A` | `#FFFFFF` | **4,29:1** | nur Platzhalter / gesperrt | **unter AA** |
+| `#000000` | `#F3F0E8` | 18,44:1 | Text auf Seitenfläche | AAA |
+| `#54595F` | `#F3F0E8` | 6,21:1 | Kontextzeile auf Seitenfläche | AAA |
+| `#7A7A7A` | `#F3F0E8` | **3,77:1** | vermeiden | **unter AA** |
+| `#000000` | `#9F9069` | 6,67:1 | Text auf Akzent Gold | AAA |
+| `#FFFFFF` | `#9F9069` | **3,15:1** | nicht verwenden (nur als Nicht-Text-Kante zulässig) | **unter AA** |
+| `#000000` | `#AE975A` | 7,37:1 | Ziffer der aktuellen Schrittmarke | AAA |
+| `#FFFFFF` | `#AE975A` | **2,85:1** | nicht verwenden, auch nicht als Kante | **unter AA** |
+| `#000000` | `#DCD5C2` | 14,34:1 | Text auf Randton | AAA |
+| `#54595F` | `#DCD5C2` | 4,83:1 | Text auf Randton | AA |
+| `#FFFFFF` | `#000000` | 21,00:1 | Hauptknopf normal | AAA |
+| `#FFFFFF` | `#2E2A22` | 14,28:1 | Hauptknopf überfahren | AAA |
+| `#000000` | `#FFFFFF` | 21,00:1 | Sekundärknopf normal | AAA |
+| `#000000` | `#F3F0E8` | 18,44:1 | Sekundärknopf überfahren | AAA |
+| `#7E2B24` | `#FFFFFF` | 9,30:1 | Gefahrknopf normal | AAA |
+| `#FFFFFF` | `#7E2B24` | 9,30:1 | Gefahrknopf überfahren | AAA |
+| `#7A7A7A` | `#EFEFEE` | 3,73:1 | gesperrter Knopf — von WCAG 1.4.3 ausgenommen | Ausnahme |
+| `#3A6B54` | `#FFFFFF` | 6,16:1 | Urteil bestanden, Text | AAA |
+| `#3A6B54` | `#EDF3EF` | 5,47:1 | Abzeichen gut, Meldung Erfolg | AA |
+| `#8A5B1C` | `#FFFFFF` | 5,84:1 | Urteil Vorbehalt, Text | AA |
+| `#8A5B1C` | `#FBF0DF` | 5,19:1 | Abzeichen Vorbehalt, Meldung Warnung | AA |
+| `#A33A32` | `#FFFFFF` | 6,55:1 | Urteil durchgefallen, Feldfehlertext | AAA |
+| `#A33A32` | `#F9EDEB` | 5,72:1 | Abzeichen schlecht, Meldung Fehler | AA |
+| `#54595F` | `#EFEFEE` | 6,15:1 | Abzeichen neutral | AAA |
+| `#000000` | `#EDF3EF` | 18,67:1 | Fließtext in Erfolgsmeldung | AAA |
+| `#000000` | `#FBF0DF` | 18,63:1 | Fließtext in Warnmeldung | AAA |
+| `#000000` | `#F9EDEB` | 18,34:1 | Fließtext in Fehlermeldung | AAA |
+
+**Zwei Befunde, die die Umsetzung betreffen:**
+
+1. `#7A7A7A` erreicht auf Weiß nur 4,29:1 und verfehlt AA für Fließtext. Die Farbe wird deshalb nicht ersetzt,
+   sondern eingegrenzt: Platzhalter, gesperrte Beschriftungen, gesperrte Knopftexte (WCAG nimmt gesperrte
+   Bedienelemente von 1.4.3 aus). Jeder zweitrangige Lesetext läuft über `#54595F` (7,07:1).
+2. Weiß auf beiden Goldtönen ist unbrauchbar (3,15:1 / 2,85:1). Gold trägt in diesem System nie Text außer in
+   Schwarz. Als **Fokusfarbe** scheidet Gold ebenfalls aus: `#9F9069` erreicht auf der Seitenfläche `#F3F0E8`
+   nur 2,77:1 und verfehlt die 3:1-Grenze für Bedienelemente. Fokus ist deshalb durchgehend
+   `outline: 2px solid #000000; outline-offset: 2px`.
+
+---
+
+## 2 Typografie
+
+Roboto Slab (400/500/600) für Überschriften, Roboto (400/500/700) für Fließtext — beide Google Fonts.
+Ergänzt um **Roboto Mono (400)**: Regel-Ausdrücke, `job`-Bezeichner, Dateinamen und eingefügtes JSON/YAML
+müssen zeichengenau lesbar sein; die Familie bleibt damit innerhalb des Roboto-Systems.
+
+| Stufe | Familie | Größe | Gewicht | Zeilenhöhe | Laufweite | Sonstiges |
+|---|---|---|---|---|---|---|
+| Seitentitel | Roboto Slab | 28 px | 500 | 34 px | −0,2 px | `text-wrap: balance` |
+| Kartentitel | Roboto Slab | 18 px | 500 | 24 px | 0 | — |
+| Fließtext | Roboto | 15 px | 400 | 24 px | 0 | max. 62 Zeichen breit |
+| Klein | Roboto | 13 px | 400 | 20 px | 0 | Grundlagenzeile, Hinweiszeile, Kontextzeile |
+| Kategorie-Wort | Roboto | 11 px | 700 | 16 px | +0,12 em | Versalien |
+| Zahl | Roboto | 34 px | 500 | 40 px | −0,5 px | `font-variant-numeric: tabular-nums lining-nums` |
+| Technisch | Roboto Mono | 13 px | 400 | 20 px | 0 | Ausdrücke, Dateinamen, eingefügter Regeltext |
+
+Abgeleitete Stufen (keine eigenen Tokens, nur Anwendungen der obigen):
+Feldbeschriftung = Roboto 13/20/700, +0,02 em, `#000000` · Knopftext = Roboto 14 px/500, +0,02 em ·
+Tabellenkopf = Roboto 12/700, +0,06 em, Versalien, `#54595F` · Tabellenzelle = Roboto 14/20, Zahlen tabular ·
+Abzeichentext = Roboto 11/700, +0,08 em, Versalien.
+
+Zahlen tragen überall `tabular-nums lining-nums` — in Kennzahlen, Tabellen und Datumsangaben.
+
+---
+
+## 3 Maße
+
+| Größe | Wert |
+|---|---|
+| Abstandsreihe | 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 |
+| Eckradien | 0 (Linien, Kappen, Trennelemente) · 2 (Knopf, Eingabe, Abzeichen, Meldung) · 4 (Karte, Bildschirmrahmen) |
+| Rahmenstärken | 1 (Karte, Zeilenlinie, Eingabe) · 2 (Fehlerrahmen, Tabellenkopf, Kennzahl-Linie, Ring der aktuellen Schrittmarke, Fokuskontur) · 3 (linke Kante der Meldung, Kappe des Schritts, Trennlinie unter dem Dokumentkopf) |
+| Kartenpolsterung | Kopf 20 px oben/unten, 24 px seitlich · Inhalt 24 px · Fuß 16 px oben/unten, 24 px seitlich |
+| Maximale Inhaltsbreite | 1120 px, Seitenpolsterung 32 px |
+| Spaltenabstand | 24 px |
+| Blockabstand in der Karte | 24 px · zwischen Karten 24 px · zwischen Bändern 32 px |
+| Textbreiten | Fließtext 62 Zeichen · Grundlagenzeile 44 Zeichen · Aufklapptext 68 Zeichen · Meldungstext 70 Zeichen |
+| Höhen | Knopf 40 px (klein 32 px) · Eingabe 40 px · Abzeichen 22 px · Kopfleiste 56 px · Tabellenzeile 44 px |
+
+---
+
+## 4 Bausteine
+
+### 4.1 Karte
+
+Aufbau: Kopf (Kategorie-Wort → Titel → eine Kontextzeile), 1 px Trennlinie `#DCD5C2`, Inhalt,
+optional Fuß mit 1 px Trennlinie oben.
+
+- Fläche `#FFFFFF`, Rahmen 1 px `#DCD5C2`, Radius 4 px, **kein Schatten**
+- Kopf: Polsterung 20/24 px · Kategorie-Wort 11/16/700 +0,12 em `#54595F` · Titel Roboto Slab 18/24/500 `#000000`, Abstand 4 px darüber · Kontextzeile 13/20 `#54595F`, Abstand 4 px darüber
+- Inhalt: Polsterung 24 px, innere Blöcke im Abstand 24 px
+- Fuß: Polsterung 16/24 px, Knöpfe rechtsbündig (sekundär links vom Haupt, Abstand 12 px); eine erklärende Zeile 13/20 `#54595F` steht linksbündig im selben Fuß (`margin-right:auto`), max. 52 Zeichen
+- Die Tiefe entsteht allein aus Weiß auf `#F3F0E8` plus Hairline — Weiß auf Sand ergibt nur 1,14:1, deshalb ist der Rahmen Pflicht, nicht Zierde
+
+### 4.2 Knopf
+
+Alle: Höhe 40 px, Polsterung 0/20 px, Radius 2 px, Rahmen 1 px, Roboto 14 px/500, +0,02 em, einzeilig.
+Klein: Höhe 32 px, Polsterung 0/12 px, 13 px.
+Fokus in **allen** Varianten und Zuständen: `outline: 2px solid #000000; outline-offset: 2px`.
+
+| Variante | Zustand | Fläche | Text | Rahmen |
+|---|---|---|---|---|
+| Haupt | normal | `#000000` | `#FFFFFF` (21,00:1) | `#000000` |
+| Haupt | überfahren | `#2E2A22` | `#FFFFFF` (14,28:1) | `#2E2A22` |
+| Haupt | gesperrt | `#EFEFEE` | `#7A7A7A` (3,73:1, Ausnahme) | `#DCD5C2` |
+| Sekundär | normal | `#FFFFFF` | `#000000` (21,00:1) | `#54595F` |
+| Sekundär | überfahren | `#F3F0E8` | `#000000` (18,44:1) | `#000000` |
+| Sekundär | gesperrt | `#FFFFFF` | `#7A7A7A` (4,29:1, Ausnahme) | `#DCD5C2` |
+| Gefahr | normal | `#FFFFFF` | `#7E2B24` (9,30:1) | `#7E2B24` |
+| Gefahr | überfahren | `#7E2B24` | `#FFFFFF` (9,30:1) | `#7E2B24` |
+| Gefahr | gesperrt | `#FFFFFF` | `#7A7A7A` (4,29:1, Ausnahme) | `#DCD5C2` |
+
+Regel: Ein gesperrter Hauptknopf steht nie allein. Im Kartenfuß begleitet ihn immer eine ungesperrte
+Zeile in `#54595F`, die sagt, was ihn freigibt.
+
+### 4.3 Formularfeld
+
+Aufbau von oben: Beschriftung → Hinweiszeile → Eingabe → (Fehlerzeile).
+
+- Beschriftung: Roboto 13/20/700, +0,02 em, `#000000`
+- Hinweiszeile: Roboto 13/20/400, `#54595F`, 2 px darüber, 8 px darunter, max. 60 Zeichen
+- Eingabe normal: Höhe 40 px, Polsterung 0/12 px, Radius 2 px, Rahmen 1 px `#54595F`, Fläche `#FFFFFF`, Text Roboto 15/22 `#000000`, Platzhalter `#7A7A7A`
+- Mehrzeilig: Roboto Mono 13/20, Polsterung 12 px, Mindesthöhe 132 px, nur senkrecht größenveränderlich
+- Fokus: `outline: 2px solid #000000; outline-offset: 2px`, Rahmen bleibt `#54595F`
+- Fehler: Rahmen 2 px `#A33A32` (linke Polsterung auf 11 px, damit die Zeile nicht springt); Fehlerzeile Roboto 13/20/500 `#A33A32` (6,55:1), 6 px Abstand, per `aria-describedby` verknüpft. Der Text nennt Ursache und Abhilfe, nie nur „ungültig“
+- Gesperrt: Fläche `#EFEFEE`, Rahmen 1 px `#DCD5C2`, Text `#7A7A7A`
+- Zwei Felder nebeneinander: Raster 1fr 1fr, Abstand 16 px
+
+### 4.4 Statusabzeichen
+
+Höhe 22 px, Polsterung 0/8 px, Radius 2 px, Rahmen 1 px, Roboto 11 px/700, +0,08 em, Versalien.
+Nie alleiniger Signalträger — daneben steht immer das Wort im Klartext.
+
+| Zustand | Fläche | Text | Rahmen | Verhältnis |
+|---|---|---|---|---|
+| neutral | `#EFEFEE` | `#54595F` | `#D8D6D0` | 6,15:1 |
+| gut | `#EDF3EF` | `#3A6B54` | `#C3D8CB` | 5,47:1 |
+| Vorbehalt | `#FBF0DF` | `#8A5B1C` | `#E8D5B4` | 5,19:1 |
+| schlecht | `#F9EDEB` | `#A33A32` | `#EDCFC9` | 5,72:1 |
+
+### 4.5 Meldung
+
+Aufbau: 3 px linke Kante in der Signalfarbe, 1 px Rahmen ringsum im Randton, Radius 2 px, Polsterung 16 px,
+Titel Roboto 14/20/700 in der Signalfarbe, Text Roboto 14/21/400 in `#000000`, 4 px darunter, max. 70 Zeichen.
+
+| Art | Fläche | Linke Kante / Titel | Rahmen | Text |
+|---|---|---|---|---|
+| Hinweis | `#F3F0E8` | `#9F9069` / Titel `#000000` | `#DCD5C2` | `#000000` (18,44:1) |
+| Warnung | `#FBF0DF` | `#8A5B1C` | `#E8D5B4` | `#000000` (18,63:1) |
+| Fehler | `#F9EDEB` | `#A33A32` | `#EDCFC9` | `#000000` (18,34:1) |
+| Erfolg | `#EDF3EF` | `#3A6B54` | `#C3D8CB` | `#000000` (18,67:1) |
+
+Der Hinweis ist die einzige Meldung im Gold: eine Information ist kein Urteil. Sobald ein Ergebnis
+bewertet wird, greift die Urteilsfamilie.
+
+### 4.6 Tabelle
+
+- Kopfzeile: Roboto 12/700, +0,06 em, Versalien, `#54595F`, linksbündig, Polsterung 0/16 px unten 8 px, untere Linie **2 px `#000000`**
+- Zeile: Roboto 14/20 `#000000`, Zellpolsterung 12/16 px, untere Linie 1 px `#DCD5C2`, Zeilenhöhe ≈ 44 px
+- Erste und letzte Spalte ohne äußere Polsterung, damit die Tabelle bündig in der Karte sitzt
+- Zahlenspalten rechtsbündig, `tabular-nums lining-nums`; auch der Kopf dieser Spalten ist rechtsbündig
+- Zweitzeile in einer Zelle: 12/18 `#54595F`, 2 px darüber (Regelausdruck, Dateiname, Zeitstempel)
+- Überfahren: Zeilenfläche `#F3F0E8`
+- Fehlender Wert: Gedankenstrich `—`, nie `0` und nie leer
+- Umschließender Container mit `overflow-x: auto`
+- Ein Urteil in der Zeile steht als Abzeichen in der letzten Spalte, nicht als Zeilenfärbung
+
+### 4.7 Kennzahl mit Grundlage
+
+Aufbau von oben: 2 px schwarze Linie → Kategorie-Wort → Zahl (+ Einheit + ggf. Vorbehalts-Abzeichen) → Grundlagenzeile.
+
+- Obere Linie 2 px `#000000`, 12 px Abstand darunter
+- Kategorie-Wort: Roboto 11/16/700, +0,12 em, Versalien, `#54595F`
+- Zahl: Roboto 34/40/500, −0,5 px, `tabular-nums lining-nums`, `#000000`, 8 px darüber
+- Einheit/Bezug auf gleicher Grundlinie: Roboto 15/22/400 `#54595F`, 8 px Abstand
+- Ein Vorbehalt sitzt als Abzeichen (4.4, Zustand Vorbehalt) **in derselben Zeile wie die Zahl** — er ist Teil der Zahl, keine Fußnote
+- Grundlagenzeile: Roboto 13/20 `#54595F`, 8 px darüber, max. 44 Zeichen breit, beginnt mit „Grundlage:“; die entscheidende Einschränkung darin in Roboto 500 `#000000`
+- **Ohne Grundlagenzeile wird die Kennzahl nicht gerendert.** Fehlt die Grundlage, zeigt die Zahl `—` und die Zeile beginnt mit „Grundlage fehlt:“
+- Drei Kennzahlen nebeneinander: Raster 3 × 1fr, Abstand 24 px
+
+### 4.8 Aufklappbarer Hintergrund
+
+`<details>/<summary>`, Beschriftung immer wörtlich „Was heißt das?“.
+
+- Zu: 1 px Linie `#DCD5C2` darüber; Zeile Roboto 15/22/500 `#000000`, Polsterung 12 px oben/unten; davor ein CSS-Dreieck 6 × 8 px in `#9F9069`, 8 px Abstand
+- Offen: Dreieck um 90° gedreht (0,12 s, unter `prefers-reduced-motion` ohne Übergang); Inhalt eingerückt hinter einer 2 px Linie `#DCD5C2`, 14 px linke Polsterung, Text Roboto 14/22 `#54595F`, max. 68 Zeichen, Absätze im Abstand 12 px, 16 px Polsterung unten
+- Der Bereich schiebt den folgenden Inhalt nach unten und überlagert nichts. Keine Tooltips im ganzen System
+
+### 4.9 Schrittanzeige
+
+Sieben gleich breite Zellen in einem Raster mit 1 px Fugen auf `#DCD5C2`, Rahmen 1 px `#DCD5C2`, Radius 4 px,
+Überlauf verborgen. Jede Zelle: 3 px Kappe über die volle Breite → Marke 26 × 26 px (Radius 2 px, Roboto 13/700,
+tabular) → Name Roboto 13/18 → Zustandswort Roboto 10/700, +0,10 em, Versalien. Zellpolsterung 0/12 px, unten 12 px;
+12 px zwischen Kappe und Marke, 8 px zwischen den übrigen Elementen. Alle sieben tragen ihren vollen Namen.
+
+| Zustand | Zellfläche | Kappe 3 px | Marke | Name | Zustandswort |
+|---|---|---|---|---|---|
+| erledigt | `#FFFFFF` | `#000000` | Fläche `#000000`, Ziffer `#FFFFFF`, Rahmen 1 px `#000000` | `#000000`, 400 | `#54595F` „Erledigt“ |
+| **aktuell** | `#F3F0E8` | `#000000` | Fläche `#AE975A`, Ziffer `#000000` (7,37:1), **Rahmen 2 px `#000000`** | `#000000`, **700** | `#000000` „Aktuell“ |
+| offen | `#FFFFFF` | `#DCD5C2` | Fläche `#FFFFFF`, Ziffer `#54595F`, Rahmen 1 px `#54595F` | `#54595F`, 400 | `#54595F` „Offen“ |
+| blockiert | `#EFEFEE` | `#DCD5C2` | Fläche `#EFEFEE`, Ziffer `#7A7A7A`, Rahmen 1 px **gestrichelt** `#7A7A7A` | `#7A7A7A`, 400 | `#7A7A7A` „Gesperrt“ |
+
+Der aktuelle Schritt trägt vier Signale gleichzeitig — warme Fläche, schwarze Kappe, goldene Marke im schwarzen
+Ring, fetter Name. Er ist die einzige goldene Fläche im Ablauf und deshalb auch bei Farbfehlsichtigkeit über
+Form und Gewicht auffindbar. Ab 900 px Breite bricht das Raster auf zwei Spalten um.
+
+---
+
+## 5 Bildschirme
+
+Gemeinsamer Rahmen aller drei: Inhalt zentriert, max. 1120 px, Seitenpolsterung 32 px, Seitenfläche `#F3F0E8`.
+Kopfleiste (56 px, weiße Fläche, 1 px `#DCD5C2`, Radius 4 px, Polsterung 0/24 px): links die Wortmarke
+„SCALEWORKS“ in Roboto Slab 17/600, +0,06 em, Versalien; rechts Vorgangsname und Bearbeiter in Roboto 13
+`#54595F`, getrennt durch Mittelpunkte.
+
+### 5.1 Ablaufübersicht
+
+Von oben nach unten, Abstände in Klammern:
+
+1. **Kopfleiste** (24 px darunter)
+2. **Vorgangskopf**, ohne Karte direkt auf der Seitenfläche: Kategorie-Wort „VORGANG“ → Seitentitel
+   „Xetra Metriken Review 31.08.2026“ (8 px) → Kontextzeile 13/20 `#54595F` mit Anlagedatum,
+   Beobachtungszeitraum, Regelzahl, Kunde (8 px). (24 px darunter)
+3. **Schrittanzeige** über die volle Breite, alle sieben Schritte. (24 px darunter)
+4. **Zwei Spalten, Raster 2fr / 1fr, Abstand 24 px:**
+   - *Links (2fr):* Karte **„Als Nächstes“** — Kopf mit Kategorie-Wort „SCHRITT 5 VON 7“, Titel des Schritts,
+     Kontextzeile mit der Frage, die der Schritt beantwortet. Inhalt: ein Absatz Fließtext (max. 66 Zeichen)
+     und eine kompakte Liste der bereits erfassten Einträge (Titel 14/20, Zeitraum und Quelle 12/18 `#54595F`,
+     rechts ein Abzeichen; Zeilen durch 1 px `#DCD5C2` getrennt). Fuß: erklärende Zeile links,
+     Sekundär- und Hauptknopf rechts.
+     Darunter (24 px) Karte **„Verlauf“** mit der Tabelle der erledigten Schritte:
+     Spalten *Schritt · Grundlage · Umfang (rechtsbündig) · Stand (Abzeichen)*. Jede Zeile trägt in der
+     Zweitzeile die Datei oder Eingabe, auf der sie beruht.
+   - *Rechts (1fr):* Karte **„Datenlage“** mit zwei Kennzahlen mit Grundlage untereinander (24 px Abstand),
+     darunter (24 px) eine Warn-Meldung zur Messlücke.
+
+Alles, was der Berater sucht, steht auf der linken Achse untereinander: Vorgang, Schrittposition, nächste Handlung.
+
+### 5.2 Ein Arbeitsschritt
+
+1. **Kopfleiste** (24 px darunter) — rechts steht hier der Vorgangsname, damit der Kontext ohne Zurückspringen sichtbar bleibt
+2. **Schrittanzeige** über die volle Breite (24 px darunter)
+3. **Zwei Spalten, Raster 1fr / 340 px, Abstand 24 px:**
+   - *Links:* eine Karte. Kopf: „SCHRITT 5 VON 7“ → „Störung erfassen“ → Kontextzeile mit Position und
+     Beobachtungszeitraum. Inhalt (Blöcke im Abstand 24 px):
+     Bezeichnung (volle Breite) → Beginn / Ende (Raster 1fr 1fr, 16 px; das Ende zeigt den Fehlerfall) →
+     Betroffene Dienste → Quelle (Auswahl) → Beleg (mehrzeilig, Roboto Mono) → Aufklapper „Was heißt das?“
+     als letzter Block, oberhalb des Fußes.
+     Fuß: erklärende Zeile links, dann *Verwerfen* (sekundär) und *Störung erfassen* (haupt).
+     **Genau ein Hauptknopf je Bildschirm.**
+   - *Rechts (feste 340 px):* Karte „Bereits erfasst“ mit derselben kompakten Liste wie 5.1,
+     darunter (24 px) eine Hinweis-Meldung zur Zeitzone.
+
+Die rechte Spalte ist bewusst fest breit: Die Formularspalte soll auf großen Bildschirmen nicht mitwachsen,
+sonst reißen die Feldbeschriftungen von ihren Eingaben ab.
+
+### 5.3 Ein Ergebnis
+
+1. **Kopfleiste** (24 px darunter)
+2. **Schrittanzeige** — Schritt 6 aktuell, Schritt 7 blockiert (24 px darunter)
+3. **Eine Karte über die volle Breite.** Kopf: „ABGLEICH · SCHRITT 6 VON 7“ → „Kalibrierung gegen zugestellte
+   Mails“ → Kontextzeile mit Umfang, Laufzeitpunkt und Dauer.
+   Inhalt, Blöcke im Abstand 24 px:
+   1. **Urteilsblock** — Fläche `#FBF0DF`, 3 px linke Kante `#8A5B1C`, 1 px Rahmen `#E8D5B4`, Polsterung 24 px:
+      Abzeichen „NICHT ENTSCHEIDBAR“ → Roboto Slab 22/28 mit dem Urteil in einem Satz (12 px) →
+      Begründungsabsatz 14/22 `#000000`, max. 62 Zeichen (8 px). Das Urteil steht vor jeder Zahl.
+   2. **Drei Kennzahlen** im Raster 3 × 1fr, Abstand 24 px — Übereinstimmung, verpasste Störungen
+      (mit Abzeichen „UNTERGRENZE“), mittlerer Zeitversatz (Grundlage nennt die angenommene Grafana-Version).
+   3. **Vorbehalt** als Warn-Meldung über die volle Breite. Titel nennt das betroffene Fenster,
+      der Text nennt die Folge für die Zahlen und **zwei konkrete Wege heraus** mit Schrittnummer.
+   4. **Tabelle je Regel** mit vorangestelltem Kategorie-Wort „JE REGEL · 8 VON 41“ (12 px darunter).
+      Spalten *Regel · Nachgespielt · Zugestellt · Abweichung · Urteil*; die drei mittleren rechtsbündig
+      und tabular, die letzte trägt das Abzeichen. „Keine Mails“ und „In Messlücke“ sind Vorbehalts-Abzeichen,
+      kein Durchfallen.
+   5. **Aufklapper „Was heißt das?“** erklärt Spaltenbedeutung und den Unterschied zwischen
+      „durchgefallen“ und „nicht entscheidbar“.
+   Fuß: erklärende Zeile links („Gesperrt bis der Abgleich besteht …“), *Abgleich wiederholen* (sekundär),
+   *Vorschläge lesen* (haupt, **gesperrt**).
+
+---
+
+## 6 Die Entscheidungen
+
+**Die Urteilsfamilie steht bewusst außerhalb des Goldes und ist als Familie gebaut, nicht als Ampel.**
+`#3A6B54`, `#8A5B1C`, `#A33A32` liegen auf einem gemeinsamen Helligkeitsband (6,16 / 5,84 / 6,55:1 auf Weiß) und
+unterscheiden sich fast nur im Farbwinkel — dadurch wirkt kein Urteil lauter als ein anderes, und ein
+durchgefallener Abgleich schreit nicht, er stellt fest. Der Vorbehaltston ist deutlich dunkler und gesättigter
+als das Markengold `#9F9069` gesetzt, damit „Vorbehalt“ nie als Zierleiste gelesen wird. Aus demselben Grund
+bekommt der Gefahrknopf mit `#7E2B24` ein eigenes, dunkleres Rot: Urteilsfarben berichten über Ergebnisse,
+Bedienfarben kündigen Handlungen an — die beiden dürfen sich nicht ausleihen.
+
+**Ein Vorbehalt bleibt sichtbar, weil er im Satzbau der Kennzahl sitzt und nicht daneben.** Das Abzeichen
+„UNTERGRENZE“ steht auf derselben Grundlinie wie die Zahl `≥ 7`, und die Grundlagenzeile ist Pflichtbestandteil
+jeder Kennzahl — fehlt sie, wird die Zahl gar nicht erst gerendert. Dadurch braucht die Seite genau **eine**
+farbige Vorbehaltsfläche (die Warn-Meldung, die das betroffene Fenster benennt und zwei Auswege mit
+Schrittnummer nennt) statt einer über die ganze Seite verstreuten Warnschicht. Das ist der ganze Trick gegen
+Überladung: Vorbehalte werden in Typografie getragen, nicht in Farbe, und nur der eine, der das Gesamturteil
+kippt, bekommt eine Fläche.
+
+**Das Urteil steht vor den Zahlen, nicht nach ihnen.** Ein Berater, der einer Bank gegenübersitzt, muss zuerst
+sagen können „das entscheidet der Abgleich nicht“ — die 83 % Übereinstimmung sind Beleg, kein Ergebnis.
+Deshalb ist der Urteilsblock der erste Inhalt der Ergebniskarte und formuliert das Urteil als vollen Satz,
+nicht als Etikett.
+
+**Der gesperrte Zustand erklärt sich immer selbst.** Ein gesperrter Hauptknopf steht nie ohne die ungesperrte
+Zeile in `#54595F`, die sagt, was ihn freigibt; ein blockierter Schritt trägt eine gestrichelte Marke und das
+Wort „Gesperrt“. Das Tor bei Schritt 6 ist die zentrale Aussage der Anwendung — es darf nie wie ein Fehler
+oder wie ein Ladezustand aussehen.
+
+**Zwei Abweichungen von der Vorgabe, beide aus Messung, nicht aus Geschmack.** Erstens: `#7A7A7A` erreicht auf
+Weiß nur 4,29:1 und wird deshalb nicht für Lesetext eingesetzt, sondern auf Platzhalter und gesperrte
+Beschriftungen begrenzt — jeder zweitrangige Text läuft über `#54595F` (7,07:1). Zweitens: die Fokuskontur ist
+schwarz und nicht golden, weil `#9F9069` auf der warmen Seitenfläche nur 2,77:1 erreicht und damit die
+3:1-Grenze für Bedienelemente verfehlt. Ergänzt wurde einzig Roboto Mono für Regelausdrücke und `job`-Bezeichner,
+wo ein falsch gelesenes Zeichen ein falsches Urteil erzeugen würde.

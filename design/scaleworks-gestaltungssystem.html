@@ -1,0 +1,750 @@
+<title>Scaleworks Gestaltungssystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto+Slab:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FFFFFF;
+  --sand:#F3F0E8;
+  --rule:#DCD5C2;
+  --ink:#000000;
+  --ink-2:#54595F;
+  --ink-3:#7A7A7A;
+  --ink-hover:#2E2A22;
+  --gold:#9F9069;
+  --gold-warm:#AE975A;
+  --pass:#3A6B54;   --pass-bg:#EDF3EF; --pass-line:#C3D8CB;
+  --hold:#8A5B1C;   --hold-bg:#FBF0DF; --hold-line:#E8D5B4;
+  --fail:#A33A32;   --fail-bg:#F9EDEB; --fail-line:#EDCFC9;
+  --neutral-bg:#EFEFEE; --neutral-line:#D8D6D0;
+  --danger:#7E2B24;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+  --r-sm:2px; --r-md:4px;
+  --serif:"Roboto Slab", Georgia, "Times New Roman", serif;
+  --sans:"Roboto", "Helvetica Neue", Arial, sans-serif;
+  --mono:"Roboto Mono", "SFMono-Regular", Consolas, monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sand);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:24px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-color:var(--ink)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+table{border-collapse:collapse;width:100%}
+
+/* ---------- Dokument-Gerüst ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding:var(--s6) var(--s5) var(--s8)}
+.doc-head{padding:var(--s7) 0 var(--s6);border-bottom:3px solid var(--gold)}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:700;line-height:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.doc-head h1{font-size:40px;line-height:46px;letter-spacing:-.4px;margin-top:var(--s3)}
+.doc-head .lede{max-width:62ch;margin-top:var(--s4);color:var(--ink-2)}
+.sec{margin-top:var(--s8)}
+.sec > h2{font-size:28px;line-height:34px;letter-spacing:-.2px}
+.sec > .sec-note{max-width:66ch;margin-top:var(--s2);color:var(--ink-2);font-size:15px}
+.sec-rule{height:2px;background:var(--ink);margin-top:var(--s4)}
+.sub{margin-top:var(--s6)}
+.sub > h3{font-size:18px;line-height:24px}
+.sub > .sub-note{max-width:66ch;margin-top:var(--s1);color:var(--ink-2);font-size:13px;line-height:20px}
+.stack{display:flex;flex-direction:column;gap:var(--s5)}
+.stack-s{display:flex;flex-direction:column;gap:var(--s3)}
+.row{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:flex-start}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s5);margin-top:var(--s5)}
+.principle{border-top:2px solid var(--ink);padding-top:var(--s3)}
+.principle h4{font-size:15px;line-height:22px}
+.principle p{margin-top:var(--s2);font-size:13px;line-height:20px;color:var(--ink-2)}
+
+/* ---------- Karte ---------- */
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-md)}
+.card-head{padding:20px var(--s5);border-bottom:1px solid var(--rule)}
+.card-head h3{font-size:18px;line-height:24px;margin-top:var(--s1)}
+.card-head .ctx{margin-top:var(--s1);font-size:13px;line-height:20px;color:var(--ink-2)}
+.card-body{padding:var(--s5)}
+.card-foot{padding:var(--s4) var(--s5);border-top:1px solid var(--rule);display:flex;gap:var(--s3);justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.card-foot .foot-note{margin-right:auto;font-size:13px;line-height:20px;color:var(--ink-2);max-width:52ch}
+
+/* ---------- Knopf ---------- */
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.02em;line-height:1;height:40px;padding:0 20px;border-radius:var(--r-sm);border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:none;white-space:nowrap}
+.btn-primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn-primary:hover{background:var(--ink-hover);border-color:var(--ink-hover)}
+.btn-secondary{background:var(--paper);color:var(--ink);border-color:var(--ink-2)}
+.btn-secondary:hover{background:var(--sand);border-color:var(--ink)}
+.btn-danger{background:var(--paper);color:var(--danger);border-color:var(--danger)}
+.btn-danger:hover{background:var(--danger);color:var(--paper);border-color:var(--danger)}
+.btn:disabled,.btn.is-disabled{background:var(--neutral-bg);color:var(--ink-3);border-color:var(--rule);cursor:not-allowed}
+.btn-secondary:disabled,.btn-danger:disabled{background:var(--paper);color:var(--ink-3);border-color:var(--rule)}
+.btn-sm{height:32px;padding:0 12px;font-size:13px}
+.is-hover.btn-primary{background:var(--ink-hover);border-color:var(--ink-hover)}
+.is-hover.btn-secondary{background:var(--sand);border-color:var(--ink)}
+.is-hover.btn-danger{background:var(--danger);color:var(--paper)}
+
+/* ---------- Formularfeld ---------- */
+.field{display:flex;flex-direction:column}
+.field > label{font-size:13px;font-weight:700;line-height:20px;letter-spacing:.02em;color:var(--ink)}
+.field > .hint{font-size:13px;line-height:20px;color:var(--ink-2);margin-top:2px;margin-bottom:var(--s2);max-width:60ch}
+.field input[type=text],.field select,.field textarea{font-family:var(--sans);font-size:15px;line-height:22px;color:var(--ink);background:var(--paper);border:1px solid var(--ink-2);border-radius:var(--r-sm);padding:8px 12px;width:100%}
+.field input[type=text],.field select{height:40px;padding:0 12px}
+.field textarea{font-family:var(--mono);font-size:13px;line-height:20px;min-height:132px;resize:vertical}
+.field ::placeholder{color:var(--ink-3)}
+.field .err{font-size:13px;line-height:20px;color:var(--fail);margin-top:6px;font-weight:500}
+.field.is-error input,.field.is-error textarea,.field.is-error select{border:2px solid var(--fail);padding-left:11px}
+.field.is-disabled input,.field.is-disabled textarea{background:var(--neutral-bg);border-color:var(--rule);color:var(--ink-3)}
+.field.is-focus input{outline:2px solid var(--ink);outline-offset:2px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+
+/* ---------- Statusabzeichen ---------- */
+.badge{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--r-sm);border:1px solid;font-size:11px;font-weight:700;line-height:1;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.badge-neutral{background:var(--neutral-bg);border-color:var(--neutral-line);color:var(--ink-2)}
+.badge-pass{background:var(--pass-bg);border-color:var(--pass-line);color:var(--pass)}
+.badge-hold{background:var(--hold-bg);border-color:var(--hold-line);color:var(--hold)}
+.badge-fail{background:var(--fail-bg);border-color:var(--fail-line);color:var(--fail)}
+
+/* ---------- Meldung ---------- */
+.note{border:1px solid;border-left-width:3px;border-radius:var(--r-sm);padding:var(--s4)}
+.note h4{font-family:var(--sans);font-size:14px;font-weight:700;line-height:20px;letter-spacing:.01em}
+.note p{margin-top:var(--s1);font-size:14px;line-height:21px;color:var(--ink);max-width:70ch}
+.note-info{background:var(--sand);border-color:var(--rule);border-left-color:var(--gold)}
+.note-info h4{color:var(--ink)}
+.note-warn{background:var(--hold-bg);border-color:var(--hold-line);border-left-color:var(--hold)}
+.note-warn h4{color:var(--hold)}
+.note-error{background:var(--fail-bg);border-color:var(--fail-line);border-left-color:var(--fail)}
+.note-error h4{color:var(--fail)}
+.note-ok{background:var(--pass-bg);border-color:var(--pass-line);border-left-color:var(--pass)}
+.note-ok h4{color:var(--pass)}
+
+/* ---------- Tabelle ---------- */
+.tbl-scroll{overflow-x:auto}
+.tbl{font-size:14px;line-height:20px}
+.tbl th{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:0 var(--s4) var(--s2);border-bottom:2px solid var(--ink);white-space:nowrap}
+.tbl td{padding:var(--s3) var(--s4);border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl th.num,.tbl td.num{text-align:right;font-variant-numeric:tabular-nums lining-nums}
+.tbl tbody tr:hover{background:var(--sand)}
+.tbl td:first-child,.tbl th:first-child{padding-left:0}
+.tbl td:last-child,.tbl th:last-child{padding-right:0}
+.tbl .sub-cell{display:block;font-size:12px;line-height:18px;color:var(--ink-2);margin-top:2px}
+
+/* ---------- Kennzahl mit Grundlage ---------- */
+.metric{border-top:2px solid var(--ink);padding-top:var(--s3)}
+.metric .m-label{font-size:11px;font-weight:700;line-height:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.metric .m-value{font-family:var(--sans);font-size:34px;font-weight:500;line-height:40px;letter-spacing:-.5px;font-variant-numeric:tabular-nums lining-nums;margin-top:var(--s2);display:flex;align-items:baseline;gap:var(--s2);flex-wrap:wrap}
+.metric .m-unit{font-size:15px;font-weight:400;line-height:22px;letter-spacing:0;color:var(--ink-2)}
+.metric .m-basis{font-size:13px;line-height:20px;color:var(--ink-2);margin-top:var(--s2);max-width:44ch}
+.metric .m-basis b{color:var(--ink);font-weight:500}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+
+/* ---------- Aufklappbarer Hintergrund ---------- */
+.disc{border-top:1px solid var(--rule)}
+.disc summary{list-style:none;cursor:pointer;padding:var(--s3) 0;display:flex;align-items:center;gap:var(--s2);font-size:15px;font-weight:500;line-height:22px}
+.disc summary::-webkit-details-marker{display:none}
+.disc summary::before{content:"";width:0;height:0;border-left:6px solid var(--gold);border-top:4px solid transparent;border-bottom:4px solid transparent;flex:none;transition:transform .12s ease}
+.disc[open] summary::before{transform:rotate(90deg)}
+.disc .disc-body{padding:0 0 var(--s4) 14px;border-left:2px solid var(--rule);margin-left:2px;color:var(--ink-2);font-size:14px;line-height:22px;max-width:68ch;display:flex;flex-direction:column;gap:var(--s3)}
+@media (prefers-reduced-motion: reduce){.disc summary::before{transition:none}}
+
+/* ---------- Schrittanzeige ---------- */
+.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--r-md);overflow:hidden}
+.step{background:var(--paper);padding:0 var(--s3) var(--s3);display:flex;flex-direction:column;gap:var(--s2)}
+.step .cap{height:3px;margin:0 calc(var(--s3) * -1)}
+.step .chip{width:26px;height:26px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:var(--s3)}
+.step .name{font-size:13px;line-height:18px}
+.step .tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.step-done .cap{background:var(--ink)}
+.step-done .chip{background:var(--ink);color:var(--paper);border:1px solid var(--ink)}
+.step-done .name{color:var(--ink)}
+.step-done .tag{color:var(--ink-2)}
+.step-now{background:var(--sand)}
+.step-now .cap{background:var(--ink)}
+.step-now .chip{background:var(--gold-warm);color:var(--ink);border:2px solid var(--ink)}
+.step-now .name{color:var(--ink);font-weight:700}
+.step-now .tag{color:var(--ink)}
+.step-open .cap{background:var(--rule)}
+.step-open .chip{background:var(--paper);color:var(--ink-2);border:1px solid var(--ink-2)}
+.step-open .name{color:var(--ink-2)}
+.step-open .tag{color:var(--ink-2)}
+.step-blocked{background:var(--neutral-bg)}
+.step-blocked .cap{background:var(--rule)}
+.step-blocked .chip{background:var(--neutral-bg);color:var(--ink-3);border:1px dashed var(--ink-3)}
+.step-blocked .name{color:var(--ink-3)}
+.step-blocked .tag{color:var(--ink-3)}
+
+/* ---------- Bildschirm-Rahmen ---------- */
+.screen{border:1px solid var(--ink-2);border-radius:var(--r-md);overflow:hidden;background:var(--sand);margin-top:var(--s4)}
+.screen-cap{background:var(--ink);color:var(--paper);padding:var(--s2) var(--s4);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between;gap:var(--s4)}
+.screen-cap span:last-child{color:var(--rule);letter-spacing:.06em}
+.screen-body{padding:var(--s5)}
+.app-bar{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-md);padding:0 var(--s5);height:56px;display:flex;align-items:center;justify-content:space-between;gap:var(--s4)}
+.wordmark{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.app-bar .meta{font-size:13px;color:var(--ink-2);display:flex;gap:var(--s4);align-items:center}
+.vorgangskopf{margin-top:var(--s5)}
+.vorgangskopf h2{font-size:28px;line-height:34px;letter-spacing:-.2px;margin-top:var(--s2)}
+.vorgangskopf .ctx{margin-top:var(--s2);font-size:13px;line-height:20px;color:var(--ink-2)}
+.cols{display:grid;grid-template-columns:2fr 1fr;gap:var(--s5);margin-top:var(--s5)}
+.cols-form{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);margin-top:var(--s5)}
+.mini-list{display:flex;flex-direction:column}
+.mini-list .item{padding:var(--s3) 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:var(--s3);align-items:flex-start}
+.mini-list .item:last-child{border-bottom:0;padding-bottom:0}
+.mini-list .item:first-child{padding-top:0}
+.mini-list .t{font-size:14px;line-height:20px}
+.mini-list .d{font-size:12px;line-height:18px;color:var(--ink-2);margin-top:2px;font-variant-numeric:tabular-nums}
+.verdict{display:flex;gap:var(--s5);align-items:flex-start;flex-wrap:wrap;padding:var(--s5);border:1px solid var(--hold-line);border-left:3px solid var(--hold);border-radius:var(--r-sm);background:var(--hold-bg)}
+.verdict .v-main{flex:1 1 320px}
+.verdict h4{font-family:var(--serif);font-size:22px;line-height:28px;color:var(--ink);margin-top:var(--s3)}
+.verdict p{margin-top:var(--s2);font-size:14px;line-height:22px;color:var(--ink);max-width:62ch}
+.spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s5)}
+.swatch{border:1px solid var(--rule);border-radius:var(--r-sm);overflow:hidden;background:var(--paper)}
+.swatch .chip{height:64px;display:flex;align-items:flex-end;padding:var(--s2) var(--s3);font-size:11px;font-weight:700;letter-spacing:.08em}
+.swatch .body{padding:var(--s3)}
+.swatch .nm{font-size:13px;font-weight:700;line-height:18px}
+.swatch .hx{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--ink-2);margin-top:2px}
+.swatch .us{font-size:12px;line-height:18px;color:var(--ink-2);margin-top:var(--s2)}
+.swatch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+.type-row{display:grid;grid-template-columns:220px 1fr;gap:var(--s5);padding:var(--s4) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.type-row .k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.type-row .k span{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-2);margin-top:var(--s1)}
+.state-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.state-cell{border:1px solid var(--rule);border-radius:var(--r-sm);padding:var(--s4);background:var(--paper);display:flex;flex-direction:column;gap:var(--s3);align-items:flex-start}
+.state-cell .lb{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.ratio{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+.ok-mark{color:var(--pass);font-weight:500}
+.no-mark{color:var(--fail);font-weight:500}
+@media (max-width: 900px){
+  .principles,.metric-grid,.spec-grid,.swatch-grid,.state-grid,.cols,.cols-form,.field-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .type-row{grid-template-columns:1fr}
+}
+</style>
+
+<div class="wrap">
+
+<header class="doc-head">
+  <div class="eyebrow">Lets Scale IT AG · Internes Werkzeug</div>
+  <h1>Scaleworks — Gestaltungssystem</h1>
+  <p class="lede">Scaleworks spielt Grafana‑Alarmregeln gegen exportierte Prometheus‑Messwerte nach und vergleicht das Ergebnis mit dem, was tatsächlich per Mail zugestellt wurde. Das Werkzeug fällt Urteile, auf die sich jemand beruft — und es sagt oft, dass es etwas nicht weiß. Beides muss die Oberfläche gleich ernst nehmen.</p>
+  <div class="principles">
+    <div class="principle"><h4>Urteil vor Zahl</h4><p>Bestanden, Vorbehalt, durchgefallen zuerst. Die Zahlen belegen das Urteil, sie ersetzen es nicht.</p></div>
+    <div class="principle"><h4>Keine Zahl ohne Grundlage</h4><p>Unter jeder Kennzahl steht, worauf sie beruht. Fehlt die Grundlage, fehlt die Kennzahl.</p></div>
+    <div class="principle"><h4>Vorbehalt ist Inhalt</h4><p>Einschränkungen stehen neben dem Ergebnis, nicht in einer Fußnote und nicht in einem Tooltip.</p></div>
+    <div class="principle"><h4>Kanten statt Schatten</h4><p>Tiefe entsteht durch weiße Karten auf warmem Grund und 1‑px‑Linien. Keine Verläufe, keine Schlagschatten.</p></div>
+  </div>
+</header>
+
+<!-- ============ BILDSCHIRME ============ -->
+<section class="sec">
+  <h2>Drei Bildschirme</h2>
+  <p class="sec-note">Ein durchgehender Vorgang: Der Berater steht bei Schritt 5, erfasst dort eine Störung und liest anschließend das Ergebnis des Abgleichs.</p>
+  <div class="sec-rule"></div>
+
+  <!-- ---- Bildschirm 1 ---- -->
+  <div class="screen">
+    <div class="screen-cap"><span>Bildschirm 1 — Ablaufübersicht</span><span>Wo stehe ich, was ist als Nächstes zu tun</span></div>
+    <div class="screen-body">
+      <div class="app-bar">
+        <div class="wordmark">Scaleworks</div>
+        <div class="meta"><span>Vorgang wechseln</span><span>·</span><span>M. Achterberg</span></div>
+      </div>
+
+      <div class="vorgangskopf">
+        <div class="eyebrow">Vorgang</div>
+        <h2>Xetra Metriken Review 31.08.2026</h2>
+        <p class="ctx">Angelegt 12.08.2026 · Beobachtungszeitraum 01.05.–31.07.2026 · 41 Regeln · Marktinfrastruktur Frankfurt</p>
+      </div>
+
+      <div style="margin-top:24px">
+        <div class="steps">
+          <div class="step step-done"><div class="cap"></div><div class="chip">1</div><div class="name">Regeln importieren</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">2</div><div class="name">Exportauftrag erzeugen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">3</div><div class="name">Messwerte hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">4</div><div class="name">Postfachexport hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-now"><div class="cap"></div><div class="chip">5</div><div class="name">Störungen erfassen</div><div class="tag">Aktuell</div></div>
+          <div class="step step-open"><div class="cap"></div><div class="chip">6</div><div class="name">Kalibrieren</div><div class="tag">Offen</div></div>
+          <div class="step step-blocked"><div class="cap"></div><div class="chip">7</div><div class="name">Vorschläge lesen</div><div class="tag">Gesperrt</div></div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="stack">
+          <div class="card">
+            <div class="card-head">
+              <div class="eyebrow">Schritt 5 von 7</div>
+              <h3>Störungen erfassen</h3>
+              <p class="ctx">Was ist im Beobachtungszeitraum tatsächlich ausgefallen?</p>
+            </div>
+            <div class="card-body stack">
+              <p style="max-width:66ch">Der Abgleich prüft, ob die Regeln die echten Störungen gemeldet hätten. Dafür braucht er eine Liste dieser Störungen — Scaleworks kann sie nicht aus den Messwerten ableiten. Bisher sind drei erfasst.</p>
+              <div class="mini-list">
+                <div class="item"><div><div class="t">Matching Engine — Latenzanstieg</div><div class="d">14.06.2026 02:40–06:05 UTC · Störungsprotokoll Kunde</div></div><span class="badge badge-neutral">Erfasst</span></div>
+                <div class="item"><div><div class="t">Marktdaten‑Feed B — Abriss</div><div class="d">27.06.2026 09:12–09:48 UTC · Störungsprotokoll Kunde</div></div><span class="badge badge-neutral">Erfasst</span></div>
+                <div class="item"><div><div class="t">Order‑Gateway 3 — Teilausfall</div><div class="d">03.07.2026 14:02–15:30 UTC · Ticket INC‑4471</div></div><span class="badge badge-hold">Zeitraum unscharf</span></div>
+              </div>
+            </div>
+            <div class="card-foot">
+              <p class="foot-note">Schritt 6 wird freigegeben, sobald mindestens eine Störung erfasst ist.</p>
+              <button class="btn btn-secondary">Später fortsetzen</button>
+              <button class="btn btn-primary">Störung erfassen</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="eyebrow">Verlauf</div>
+              <h3>Erledigte Schritte</h3>
+              <p class="ctx">Jeder Eintrag nennt die Datei oder Eingabe, auf der er beruht.</p>
+            </div>
+            <div class="card-body">
+              <div class="tbl-scroll">
+                <table class="tbl">
+                  <thead><tr><th>Schritt</th><th>Grundlage</th><th class="num">Umfang</th><th>Stand</th></tr></thead>
+                  <tbody>
+                    <tr><td>1 — Regeln importieren<span class="sub-cell">12.08.2026, 09:41</span></td><td>xetra-rules.yaml<span class="sub-cell">Grafana‑Export, Version 10.4 angenommen</span></td><td class="num">41</td><td><span class="badge badge-hold">Vorbehalt</span></td></tr>
+                    <tr><td>2 — Exportauftrag erzeugen<span class="sub-cell">12.08.2026, 10:05</span></td><td>scaleworks-export.sh<span class="sub-cell">92 Tage, 6 Kennzahlen</span></td><td class="num">1</td><td><span class="badge badge-pass">Fertig</span></td></tr>
+                    <tr><td>3 — Messwerte hochladen<span class="sub-cell">19.08.2026, 16:22</span></td><td>metrics-2026-05-07.tar.gz<span class="sub-cell">4 h Lücke am 14.06.</span></td><td class="num">1 284</td><td><span class="badge badge-hold">Vorbehalt</span></td></tr>
+                    <tr><td>4 — Postfachexport hochladen<span class="sub-cell">21.08.2026, 11:07</span></td><td>alerts-inbox.mbox<span class="sub-cell">612 von 1 041 Nachrichten zugeordnet</span></td><td class="num">612</td><td><span class="badge badge-pass">Fertig</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head">
+              <div class="eyebrow">Datenlage</div>
+              <h3>Was liegt vor</h3>
+              <p class="ctx">Stand 31.08.2026, 08:14</p>
+            </div>
+            <div class="card-body stack">
+              <div class="metric">
+                <div class="m-label">Abgedeckter Zeitraum</div>
+                <div class="m-value">92<span class="m-unit">Tage</span></div>
+                <p class="m-basis">Grundlage: Messwerte 01.05.–31.07.2026, <b>lückenlos außer 14.06., 02:00–06:00 UTC</b>.</p>
+              </div>
+              <div class="metric">
+                <div class="m-label">Zugeordnete Mails</div>
+                <div class="m-value">612<span class="m-unit">von 1 041</span></div>
+                <p class="m-basis">Grundlage: Betreffzeilen‑Abgleich im mbox‑Export. 429 Nachrichten tragen keine Regelkennung und bleiben unberücksichtigt.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="note note-warn">
+            <h4>Messlücke am 14.06.2026</h4>
+            <p>Vier Stunden Messwerte fehlen. Eine bereits erfasste Störung liegt in diesem Fenster. Der Abgleich wird dafür kein Urteil fällen können.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- Bildschirm 2 ---- -->
+  <div class="screen" style="margin-top:32px">
+    <div class="screen-cap"><span>Bildschirm 2 — Ein Arbeitsschritt</span><span>Formular, Erklärung auf Abruf, ein Hauptknopf</span></div>
+    <div class="screen-body">
+      <div class="app-bar">
+        <div class="wordmark">Scaleworks</div>
+        <div class="meta"><span>Xetra Metriken Review 31.08.2026</span><span>·</span><span>M. Achterberg</span></div>
+      </div>
+
+      <div style="margin-top:24px">
+        <div class="steps">
+          <div class="step step-done"><div class="cap"></div><div class="chip">1</div><div class="name">Regeln importieren</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">2</div><div class="name">Exportauftrag erzeugen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">3</div><div class="name">Messwerte hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">4</div><div class="name">Postfachexport hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-now"><div class="cap"></div><div class="chip">5</div><div class="name">Störungen erfassen</div><div class="tag">Aktuell</div></div>
+          <div class="step step-open"><div class="cap"></div><div class="chip">6</div><div class="name">Kalibrieren</div><div class="tag">Offen</div></div>
+          <div class="step step-blocked"><div class="cap"></div><div class="chip">7</div><div class="name">Vorschläge lesen</div><div class="tag">Gesperrt</div></div>
+        </div>
+      </div>
+
+      <div class="cols-form">
+        <div class="card">
+          <div class="card-head">
+            <div class="eyebrow">Schritt 5 von 7</div>
+            <h3>Störung erfassen</h3>
+            <p class="ctx">Vierte von voraussichtlich elf Störungen · Beobachtungszeitraum 01.05.–31.07.2026</p>
+          </div>
+          <div class="card-body stack">
+            <div class="field">
+              <label for="f-name">Bezeichnung</label>
+              <p class="hint">Wie die Störung im Protokoll des Kunden heißt. Erscheint später unverändert im Bericht.</p>
+              <input id="f-name" type="text" value="Order-Gateway 3 — Teilausfall Sitzungsaufbau">
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="f-start">Beginn (UTC)</label>
+                <p class="hint">TT.MM.JJJJ hh:mm</p>
+                <input id="f-start" type="text" value="17.07.2026 14:02">
+              </div>
+              <div class="field is-error">
+                <label for="f-end">Ende (UTC)</label>
+                <p class="hint">TT.MM.JJJJ hh:mm</p>
+                <input id="f-end" type="text" value="17.07.2026 13:30" aria-describedby="f-end-err">
+                <p class="err" id="f-end-err">Das Ende liegt vor dem Beginn. Bitte einen Zeitpunkt nach 14:02 eintragen.</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-svc">Betroffene Dienste</label>
+              <p class="hint">Kommagetrennt. Muss zu den <code style="font-family:var(--mono);font-size:13px">job</code>‑Bezeichnern im Messwert‑Export passen, sonst findet der Abgleich keine Regel.</p>
+              <input id="f-svc" type="text" value="order-gateway-3, session-broker">
+            </div>
+
+            <div class="field">
+              <label for="f-src">Quelle</label>
+              <p class="hint">Woher die Angabe stammt. Steuert, wie belastbar Scaleworks den Zeitraum behandelt.</p>
+              <select id="f-src">
+                <option>Störungsprotokoll des Kunden</option>
+                <option selected>Ticketsystem (INC)</option>
+                <option>Mündliche Auskunft — Zeitraum unscharf</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="f-ev">Beleg</label>
+              <p class="hint">Auszug aus Protokoll oder Ticket. Wird nicht ausgewertet, nur im Bericht mitgeführt.</p>
+              <textarea id="f-ev">INC-4471  17.07.2026 14:02Z
+  Sitzungsaufbau ueber OG-3 schlaegt fuer 38 % der Clients fehl.
+  Ursache: Zertifikatskette nach Rotation unvollstaendig.
+  Behoben 17.07.2026 15:30Z</textarea>
+            </div>
+
+            <details class="disc">
+              <summary>Was heißt das?</summary>
+              <div class="disc-body">
+                <p>Scaleworks kann aus Messwerten allein nicht erkennen, was eine Störung war. Ein Latenzanstieg kann ein Ausfall sein oder ein geplanter Lasttest. Deshalb tragen Sie hier ein, was tatsächlich passiert ist.</p>
+                <p>Im Abgleich (Schritt 6) prüft das Werkzeug für jede erfasste Störung, ob mindestens eine Regel im Störungsfenster ausgelöst hätte. Störungen ohne Auslösung zählen als verpasst — das ist die Zahl, die eine Schwellwert‑Empfehlung am stärksten bewegt.</p>
+                <p>Ist die Quelle „Zeitraum unscharf“, weitet Scaleworks das Fenster um ±15 Minuten und weist das Ergebnis für diese Störung als Vorbehalt aus, statt es als bestanden oder durchgefallen zu werten.</p>
+              </div>
+            </details>
+          </div>
+          <div class="card-foot">
+            <p class="foot-note">Die Störung lässt sich später ändern, solange der Abgleich nicht bestanden ist.</p>
+            <button class="btn btn-secondary">Verwerfen</button>
+            <button class="btn btn-primary">Störung erfassen</button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head">
+              <div class="eyebrow">In diesem Vorgang</div>
+              <h3>Bereits erfasst</h3>
+              <p class="ctx">3 Störungen</p>
+            </div>
+            <div class="card-body">
+              <div class="mini-list">
+                <div class="item"><div><div class="t">Matching Engine — Latenzanstieg</div><div class="d">14.06.2026 02:40–06:05</div></div><span class="badge badge-hold">In Messlücke</span></div>
+                <div class="item"><div><div class="t">Marktdaten‑Feed B — Abriss</div><div class="d">27.06.2026 09:12–09:48</div></div><span class="badge badge-neutral">Erfasst</span></div>
+                <div class="item"><div><div class="t">Order‑Gateway 3 — Teilausfall</div><div class="d">03.07.2026 14:02–15:30</div></div><span class="badge badge-hold">Zeitraum unscharf</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="note note-info">
+            <h4>Zeitzone</h4>
+            <p>Alle Zeitpunkte in UTC. Der Prometheus‑Export und der Postfachexport werden ebenfalls als UTC gelesen; abweichende Zeitstempel im Ticket müssen vor der Eingabe umgerechnet werden.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- Bildschirm 3 ---- -->
+  <div class="screen" style="margin-top:32px">
+    <div class="screen-cap"><span>Bildschirm 3 — Ein Ergebnis</span><span>Urteil, Kennzahlen mit Grundlage, Vorbehalt, Tabelle</span></div>
+    <div class="screen-body">
+      <div class="app-bar">
+        <div class="wordmark">Scaleworks</div>
+        <div class="meta"><span>Xetra Metriken Review 31.08.2026</span><span>·</span><span>M. Achterberg</span></div>
+      </div>
+
+      <div style="margin-top:24px">
+        <div class="steps">
+          <div class="step step-done"><div class="cap"></div><div class="chip">1</div><div class="name">Regeln importieren</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">2</div><div class="name">Exportauftrag erzeugen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">3</div><div class="name">Messwerte hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">4</div><div class="name">Postfachexport hochladen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-done"><div class="cap"></div><div class="chip">5</div><div class="name">Störungen erfassen</div><div class="tag">Erledigt</div></div>
+          <div class="step step-now"><div class="cap"></div><div class="chip">6</div><div class="name">Kalibrieren</div><div class="tag">Aktuell</div></div>
+          <div class="step step-blocked"><div class="cap"></div><div class="chip">7</div><div class="name">Vorschläge lesen</div><div class="tag">Gesperrt</div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:24px">
+        <div class="card-head">
+          <div class="eyebrow">Abgleich · Schritt 6 von 7</div>
+          <h3>Kalibrierung gegen zugestellte Mails</h3>
+          <p class="ctx">1 284 nachgespielte Auswertungsfenster gegen 612 zugeordnete Mails · Lauf vom 31.08.2026, 08:19 · Dauer 41 s</p>
+        </div>
+        <div class="card-body stack">
+
+          <div class="verdict">
+            <div class="v-main">
+              <span class="badge badge-hold">Nicht entscheidbar</span>
+              <h4>Der Abgleich kann nicht bestehen oder durchfallen.</h4>
+              <p>83 % der nachgespielten Auslösungen decken sich mit dem, was zugestellt wurde. Für 4 der 11 erfassten Störungen fehlen jedoch die Messwerte — für sie lässt sich weder zeigen, dass eine Regel ausgelöst hätte, noch dass sie es nicht getan hätte. Solange diese Lücke offen ist, gibt Scaleworks keine Schwellwert‑Empfehlung ab.</p>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="m-label">Übereinstimmung</div>
+              <div class="m-value">83<span class="m-unit">%</span></div>
+              <p class="m-basis">Grundlage: 1 180 von 1 284 nachgespielten Fenstern haben ein Gegenstück im Postfach. <b>104 Fenster ohne Gegenstück</b>, davon 61 in der Messlücke.</p>
+            </div>
+            <div class="metric">
+              <div class="m-label">Verpasste Störungen</div>
+              <div class="m-value">≥ 7<span class="m-unit">von 11</span> <span class="badge badge-hold">Untergrenze</span></div>
+              <p class="m-basis">Grundlage: 7 erfasste Störungen ohne Auslösung. <b>4 weitere liegen in der Messlücke</b> und sind nicht prüfbar — der wahre Wert liegt zwischen 7 und 11.</p>
+            </div>
+            <div class="metric">
+              <div class="m-label">Mittlerer Zeitversatz</div>
+              <div class="m-value">0,9<span class="m-unit">Sekunden</span></div>
+              <p class="m-basis">Grundlage: Median über 508 eindeutig zugeordnete Paare. <b>Grafana‑Version 10.4 angenommen</b>, nicht aus dem Regelexport belegt.</p>
+            </div>
+          </div>
+
+          <div class="note note-warn">
+            <h4>Vorbehalt — Messlücke 14.06.2026, 02:00–06:00 UTC</h4>
+            <p>Vier Stunden Messwerte fehlen im Export. In dieses Fenster fallen 4 der 11 erfassten Störungen. Alle Zahlen oben schließen dieses Fenster aus; die verpassten Störungen sind deshalb als Untergrenze ausgewiesen. Zwei Wege heraus: die fehlenden Messwerte in Schritt 3 nachliefern, oder die 4 Störungen in Schritt 5 als nicht prüfbar kennzeichnen — dann urteilt der Abgleich über die verbleibenden 7.</p>
+          </div>
+
+          <div>
+            <div class="eyebrow" style="margin-bottom:12px">Je Regel · 8 von 41</div>
+            <div class="tbl-scroll">
+              <table class="tbl">
+                <thead>
+                  <tr><th>Regel</th><th class="num">Nachgespielt</th><th class="num">Zugestellt</th><th class="num">Abweichung</th><th>Urteil</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>xetra_match_latency_p99<span class="sub-cell">&gt; 250 ms für 5 min</span></td><td class="num">148</td><td class="num">148</td><td class="num">0</td><td><span class="badge badge-pass">Bestanden</span></td></tr>
+                  <tr><td>xetra_order_reject_rate<span class="sub-cell">&gt; 2 % für 10 min</span></td><td class="num">62</td><td class="num">61</td><td class="num">−1</td><td><span class="badge badge-pass">Bestanden</span></td></tr>
+                  <tr><td>md_feed_gap_seconds<span class="sub-cell">&gt; 30 s für 1 min</span></td><td class="num">311</td><td class="num">204</td><td class="num">−107</td><td><span class="badge badge-fail">Durchgefallen</span></td></tr>
+                  <tr><td>gateway_session_setup_fail<span class="sub-cell">&gt; 5 % für 5 min</span></td><td class="num">27</td><td class="num">27</td><td class="num">0</td><td><span class="badge badge-pass">Bestanden</span></td></tr>
+                  <tr><td>node_disk_pressure<span class="sub-cell">&gt; 85 % für 30 min</span></td><td class="num">9</td><td class="num">9</td><td class="num">0</td><td><span class="badge badge-pass">Bestanden</span></td></tr>
+                  <tr><td>clearing_batch_lag<span class="sub-cell">&gt; 120 s für 15 min</span></td><td class="num">44</td><td class="num">—</td><td class="num">—</td><td><span class="badge badge-hold">Keine Mails</span></td></tr>
+                  <tr><td>xetra_book_depth_low<span class="sub-cell">&lt; 3 Ebenen für 2 min</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="badge badge-hold">In Messlücke</span></td></tr>
+                  <tr><td>risk_engine_heartbeat<span class="sub-cell">fehlt für 1 min</span></td><td class="num">18</td><td class="num">22</td><td class="num">+4</td><td><span class="badge badge-fail">Durchgefallen</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <details class="disc">
+            <summary>Was heißt das?</summary>
+            <div class="disc-body">
+              <p>„Nachgespielt“ ist die Zahl der Fenster, in denen die Regel auf den exportierten Messwerten ausgelöst hätte. „Zugestellt“ ist die Zahl der Mails, die Scaleworks dieser Regel zuordnen konnte. Eine negative Abweichung heißt: die Regel hätte häufiger ausgelöst, als tatsächlich Mail ankam — meist ein Zustellweg, den der Export nicht enthält.</p>
+              <p>„Keine Mails“ ist kein Durchfallen. Es heißt, dass im mbox‑Export keine einzige Nachricht dieser Regel zugeordnet werden konnte — vielleicht weil sie an einen anderen Verteiler geht. Ein Urteil setzte voraus, dass beide Seiten vorliegen.</p>
+            </div>
+          </details>
+
+        </div>
+        <div class="card-foot">
+          <p class="foot-note">Gesperrt bis der Abgleich besteht. Fehlende Messwerte in Schritt 3 nachliefern oder die 4 Störungen im Lückenfenster in Schritt 5 als nicht prüfbar kennzeichnen.</p>
+          <button class="btn btn-secondary">Abgleich wiederholen</button>
+          <button class="btn btn-primary" disabled>Vorschläge lesen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAUSTEINE ============ -->
+<section class="sec">
+  <h2>Bausteine</h2>
+  <p class="sec-note">Neun Bausteine, alle Zustände. Mehr braucht die Anwendung nicht.</p>
+  <div class="sec-rule"></div>
+
+  <div class="sub">
+    <h3>Knopf</h3>
+    <p class="sub-note">Höhe 40 px, Polsterung 0/20 px, Radius 2 px, Roboto 14 px/500. Fokus überall: 2 px schwarze Kontur, 2 px Abstand.</p>
+    <div class="state-grid" style="margin-top:16px">
+      <div class="state-cell"><div class="lb">Haupt</div><button class="btn btn-primary">Störung erfassen</button><button class="btn btn-primary is-hover">Überfahren</button><button class="btn btn-primary" disabled>Gesperrt</button></div>
+      <div class="state-cell"><div class="lb">Sekundär</div><button class="btn btn-secondary">Später fortsetzen</button><button class="btn btn-secondary is-hover">Überfahren</button><button class="btn btn-secondary" disabled>Gesperrt</button></div>
+      <div class="state-cell"><div class="lb">Gefahr</div><button class="btn btn-danger">Vorgang löschen</button><button class="btn btn-danger is-hover">Überfahren</button><button class="btn btn-danger" disabled>Gesperrt</button></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Statusabzeichen</h3>
+    <p class="sub-note">Nie allein als Signal — jedes Abzeichen steht neben einem Wort, das dasselbe sagt.</p>
+    <div class="row" style="margin-top:16px">
+      <span class="badge badge-neutral">Erfasst</span>
+      <span class="badge badge-pass">Bestanden</span>
+      <span class="badge badge-hold">Nicht entscheidbar</span>
+      <span class="badge badge-hold">Untergrenze</span>
+      <span class="badge badge-fail">Durchgefallen</span>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Meldung</h3>
+    <div class="spec-grid" style="margin-top:16px">
+      <div class="note note-info"><h4>Hinweis</h4><p>Der Exportauftrag deckt 6 Kennzahlen ab. Regeln, die andere Kennzahlen verwenden, bleiben im Abgleich unberücksichtigt.</p></div>
+      <div class="note note-warn"><h4>Warnung</h4><p>Der Messwert‑Export endet am 31.07.2026, 23:00 UTC. Die letzte Stunde des Beobachtungszeitraums fehlt.</p></div>
+      <div class="note note-error"><h4>Fehler</h4><p>Die Datei konnte nicht gelesen werden: Zeile 41 erwartet einen Ausdruck nach <code style="font-family:var(--mono);font-size:13px">expr:</code>. Bitte den Grafana‑Export erneut erzeugen.</p></div>
+      <div class="note note-ok"><h4>Erfolg</h4><p>41 Regeln importiert. Zwei Regeln ohne <code style="font-family:var(--mono);font-size:13px">for:</code>‑Angabe wurden mit 0 s übernommen.</p></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Formularfeld</h3>
+    <div class="spec-grid" style="margin-top:16px">
+      <div class="card"><div class="card-body stack">
+        <div class="field"><label for="d1">Normal</label><p class="hint">Hinweiszeile — sagt, was das Feld erwartet.</p><input id="d1" type="text" placeholder="TT.MM.JJJJ hh:mm"></div>
+        <div class="field is-focus"><label for="d2">Fokussiert</label><p class="hint">2 px schwarze Kontur mit 2 px Abstand.</p><input id="d2" type="text" value="17.07.2026 14:02"></div>
+      </div></div>
+      <div class="card"><div class="card-body stack">
+        <div class="field is-error"><label for="d3">Fehlerfall</label><p class="hint">TT.MM.JJJJ hh:mm</p><input id="d3" type="text" value="17.07.2026 13:30"><p class="err">Das Ende liegt vor dem Beginn. Bitte einen Zeitpunkt nach 14:02 eintragen.</p></div>
+        <div class="field is-disabled"><label for="d4">Gesperrt</label><p class="hint">Wird aus dem Regelexport übernommen.</p><input id="d4" type="text" value="10.4 (angenommen)" disabled></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Kennzahl mit Grundlage</h3>
+    <p class="sub-note">Die Grundlage ist Pflicht. Ein Vorbehalt sitzt als Abzeichen in der Zahlenzeile, damit er nicht überlesen wird.</p>
+    <div class="card" style="margin-top:16px"><div class="card-body">
+      <div class="metric-grid">
+        <div class="metric"><div class="m-label">Ohne Vorbehalt</div><div class="m-value">612<span class="m-unit">Mails</span></div><p class="m-basis">Grundlage: Betreffzeilen‑Abgleich über 1 041 Nachrichten im mbox‑Export.</p></div>
+        <div class="metric"><div class="m-label">Mit Vorbehalt</div><div class="m-value">≥ 7<span class="m-unit">von 11</span> <span class="badge badge-hold">Untergrenze</span></div><p class="m-basis">Grundlage: 7 erfasste Störungen ohne Auslösung. <b>4 weitere nicht prüfbar.</b></p></div>
+        <div class="metric"><div class="m-label">Nicht ermittelbar</div><div class="m-value">—</div><p class="m-basis">Grundlage fehlt: Für <b>clearing_batch_lag</b> konnte keine Mail zugeordnet werden.</p></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sub">
+    <h3>Aufklappbarer Hintergrund</h3>
+    <p class="sub-note">Immer derselbe Text: „Was heißt das?“ Links im Karteninhalt, nie in einem Tooltip.</p>
+    <div class="card" style="margin-top:16px"><div class="card-body">
+      <details class="disc"><summary>Was heißt das?</summary><div class="disc-body"><p>Zu — die Zeile trägt eine 1‑px‑Linie darüber und ein goldenes Dreieck. Der Rest der Karte bleibt unverändert.</p></div></details>
+      <details class="disc" open><summary>Was heißt das?</summary><div class="disc-body"><p>Offen — das Dreieck kippt um 90°, der Text steht hinter einer 2‑px‑Linie eingerückt, höchstens 68 Zeichen breit, in Text‑Grau.</p><p>Absätze im Abstand 12 px. Der Bereich schiebt den folgenden Inhalt nach unten; er überlagert nichts.</p></div></details>
+    </div></div>
+  </div>
+
+  <div class="sub">
+    <h3>Schrittanzeige</h3>
+    <p class="sub-note">Alle vier Zustände nebeneinander. Der aktuelle Schritt trägt vier Signale gleichzeitig: warme Fläche, schwarze Kappe, goldene Marke mit schwarzem Ring, fetter Name.</p>
+    <div style="margin-top:16px">
+      <div class="steps">
+        <div class="step step-done"><div class="cap"></div><div class="chip">1</div><div class="name">Regeln importieren</div><div class="tag">Erledigt</div></div>
+        <div class="step step-done"><div class="cap"></div><div class="chip">2</div><div class="name">Exportauftrag erzeugen</div><div class="tag">Erledigt</div></div>
+        <div class="step step-done"><div class="cap"></div><div class="chip">3</div><div class="name">Messwerte hochladen</div><div class="tag">Erledigt</div></div>
+        <div class="step step-now"><div class="cap"></div><div class="chip">4</div><div class="name">Postfachexport hochladen</div><div class="tag">Aktuell</div></div>
+        <div class="step step-open"><div class="cap"></div><div class="chip">5</div><div class="name">Störungen erfassen</div><div class="tag">Offen</div></div>
+        <div class="step step-open"><div class="cap"></div><div class="chip">6</div><div class="name">Kalibrieren</div><div class="tag">Offen</div></div>
+        <div class="step step-blocked"><div class="cap"></div><div class="chip">7</div><div class="name">Vorschläge lesen</div><div class="tag">Gesperrt</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FARBEN ============ -->
+<section class="sec">
+  <h2>Farben</h2>
+  <p class="sec-note">Das Corporate Design unverändert, ergänzt um eine eigene Urteilsfamilie. Gold trägt Marke und Orientierung, nie ein Urteil.</p>
+  <div class="sec-rule"></div>
+
+  <div class="sub">
+    <h3>Corporate Design</h3>
+    <div class="swatch-grid" style="margin-top:16px">
+      <div class="swatch"><div class="chip" style="background:#000000;color:#FFFFFF">Aa</div><div class="body"><div class="nm">Schwarz</div><div class="hx">#000000</div><div class="us">Text, Hauptknopf, Tabellenkopf‑Linie</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#54595F;color:#FFFFFF">Aa</div><div class="body"><div class="nm">Grau</div><div class="hx">#54595F</div><div class="us">Zweitrangiger Text, Eingaberahmen</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#7A7A7A;color:#FFFFFF">Aa</div><div class="body"><div class="nm">Text‑Grau</div><div class="hx">#7A7A7A</div><div class="us">Nur Platzhalter und gesperrte Beschriftung</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#9F9069;color:#000000">Aa</div><div class="body"><div class="nm">Akzent Gold</div><div class="hx">#9F9069</div><div class="us">Linkunterstreichung, Dreieck, Trennlinie</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#AE975A;color:#000000">Aa</div><div class="body"><div class="nm">Gold warm</div><div class="hx">#AE975A</div><div class="us">Marke des aktuellen Schritts</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F3F0E8;color:#000000">Aa</div><div class="body"><div class="nm">Gold sehr hell</div><div class="hx">#F3F0E8</div><div class="us">Seitenfläche, Hinweis‑Meldung</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#DCD5C2;color:#000000">Aa</div><div class="body"><div class="nm">Gold‑Rand</div><div class="hx">#DCD5C2</div><div class="us">Kartenrand, Tabellenzeilen‑Linie</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#FFFFFF;color:#000000;border-bottom:1px solid #DCD5C2">Aa</div><div class="body"><div class="nm">Weiß</div><div class="hx">#FFFFFF</div><div class="us">Kartenfläche, Eingabefläche</div></div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Urteilsfamilie — außerhalb des Goldes</h3>
+    <p class="sub-note">Drei Töne auf gleicher Helligkeit (5,8–6,6:1 auf Weiß), deutlich gesättigter als Gold und in drei klar getrennten Farbwinkeln. Jeweils mit heller Fläche und Randton.</p>
+    <div class="swatch-grid" style="margin-top:16px">
+      <div class="swatch"><div class="chip" style="background:#3A6B54;color:#FFFFFF">Bestanden</div><div class="body"><div class="nm">Urteil bestanden</div><div class="hx">#3A6B54</div><div class="us">Fläche #EDF3EF · Rand #C3D8CB</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#8A5B1C;color:#FFFFFF">Vorbehalt</div><div class="body"><div class="nm">Urteil Vorbehalt</div><div class="hx">#8A5B1C</div><div class="us">Fläche #FBF0DF · Rand #E8D5B4</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#A33A32;color:#FFFFFF">Durchgefallen</div><div class="body"><div class="nm">Urteil durchgefallen</div><div class="hx">#A33A32</div><div class="us">Fläche #F9EDEB · Rand #EDCFC9</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#7E2B24;color:#FFFFFF">Gefahr</div><div class="body"><div class="nm">Bedienfarbe Gefahr</div><div class="hx">#7E2B24</div><div class="us">Nur zerstörende Knöpfe — kein Urteil</div></div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Gemessene Kontraste</h3>
+    <p class="sub-note">Alle Werte nach WCAG 2.1. Grenze für Fließtext 4,5:1, für Text ab 24 px oder 19 px fett 3:1, für Rahmen und Bedienelemente 3:1.</p>
+    <div class="card" style="margin-top:16px"><div class="card-body"><div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>Vordergrund</th><th>Fläche</th><th class="num">Verhältnis</th><th>Verwendung</th><th>Bewertung</th></tr></thead>
+        <tbody>
+          <tr><td class="ratio">#000000</td><td class="ratio">#FFFFFF</td><td class="num ratio">21,00:1</td><td>Fließtext, Überschriften</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#54595F</td><td class="ratio">#FFFFFF</td><td class="num ratio">7,07:1</td><td>Zweitrangiger Text, Grundlagenzeile</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#7A7A7A</td><td class="ratio">#FFFFFF</td><td class="num ratio">4,29:1</td><td>nur Platzhalter, gesperrte Beschriftung</td><td class="no-mark">unter AA</td></tr>
+          <tr><td class="ratio">#000000</td><td class="ratio">#F3F0E8</td><td class="num ratio">18,44:1</td><td>Text auf Seitenfläche</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#54595F</td><td class="ratio">#F3F0E8</td><td class="num ratio">6,21:1</td><td>Kontextzeile auf Seitenfläche</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#7A7A7A</td><td class="ratio">#F3F0E8</td><td class="num ratio">3,77:1</td><td>vermeiden</td><td class="no-mark">unter AA</td></tr>
+          <tr><td class="ratio">#000000</td><td class="ratio">#9F9069</td><td class="num ratio">6,67:1</td><td>Text auf Akzent Gold</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#FFFFFF</td><td class="ratio">#9F9069</td><td class="num ratio">3,15:1</td><td>nicht verwenden</td><td class="no-mark">unter AA</td></tr>
+          <tr><td class="ratio">#000000</td><td class="ratio">#AE975A</td><td class="num ratio">7,37:1</td><td>Ziffer der aktuellen Schrittmarke</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#FFFFFF</td><td class="ratio">#AE975A</td><td class="num ratio">2,85:1</td><td>nicht verwenden</td><td class="no-mark">unter AA</td></tr>
+          <tr><td class="ratio">#000000</td><td class="ratio">#DCD5C2</td><td class="num ratio">14,34:1</td><td>Text auf Randton</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#54595F</td><td class="ratio">#DCD5C2</td><td class="num ratio">4,83:1</td><td>Text auf Randton</td><td class="ok-mark">AA</td></tr>
+          <tr><td class="ratio">#FFFFFF</td><td class="ratio">#000000</td><td class="num ratio">21,00:1</td><td>Hauptknopf</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#FFFFFF</td><td class="ratio">#2E2A22</td><td class="num ratio">14,28:1</td><td>Hauptknopf überfahren</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#7E2B24</td><td class="ratio">#FFFFFF</td><td class="num ratio">9,30:1</td><td>Gefahrknopf normal</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#FFFFFF</td><td class="ratio">#7E2B24</td><td class="num ratio">9,30:1</td><td>Gefahrknopf überfahren</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#3A6B54</td><td class="ratio">#FFFFFF</td><td class="num ratio">6,16:1</td><td>Urteil bestanden, Text</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#3A6B54</td><td class="ratio">#EDF3EF</td><td class="num ratio">5,47:1</td><td>Abzeichen, Meldung Erfolg</td><td class="ok-mark">AA</td></tr>
+          <tr><td class="ratio">#8A5B1C</td><td class="ratio">#FFFFFF</td><td class="num ratio">5,84:1</td><td>Urteil Vorbehalt, Text</td><td class="ok-mark">AA</td></tr>
+          <tr><td class="ratio">#8A5B1C</td><td class="ratio">#FBF0DF</td><td class="num ratio">5,19:1</td><td>Abzeichen, Meldung Warnung</td><td class="ok-mark">AA</td></tr>
+          <tr><td class="ratio">#A33A32</td><td class="ratio">#FFFFFF</td><td class="num ratio">6,55:1</td><td>Urteil durchgefallen, Feldfehler</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#A33A32</td><td class="ratio">#F9EDEB</td><td class="num ratio">5,72:1</td><td>Abzeichen, Meldung Fehler</td><td class="ok-mark">AA</td></tr>
+          <tr><td class="ratio">#54595F</td><td class="ratio">#EFEFEE</td><td class="num ratio">6,15:1</td><td>Abzeichen neutral</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#000000</td><td class="ratio">#EDF3EF / #FBF0DF / #F9EDEB</td><td class="num ratio">18,3–18,7:1</td><td>Fließtext in Meldungen</td><td class="ok-mark">AAA</td></tr>
+          <tr><td class="ratio">#7A7A7A</td><td class="ratio">#EFEFEE</td><td class="num ratio">3,73:1</td><td>gesperrter Knopf — von 1.4.3 ausgenommen</td><td class="no-mark">Ausnahme</td></tr>
+        </tbody>
+      </table>
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ============ TYPOGRAFIE + MASSE ============ -->
+<section class="sec">
+  <h2>Typografie und Maße</h2>
+  <p class="sec-note">Sechs Stufen, eine Abstandsreihe, drei Radien. Zahlen immer in Tabellenziffern.</p>
+  <div class="sec-rule"></div>
+
+  <div class="sub">
+    <h3>Stufen</h3>
+    <div style="margin-top:8px">
+      <div class="type-row"><div class="k">Seitentitel<span>Roboto Slab 500 · 28/34 · −0,2 px</span></div><div><div style="font-family:var(--serif);font-size:28px;font-weight:500;line-height:34px;letter-spacing:-.2px">Xetra Metriken Review 31.08.2026</div></div></div>
+      <div class="type-row"><div class="k">Kartentitel<span>Roboto Slab 500 · 18/24 · 0</span></div><div><div style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:24px">Kalibrierung gegen zugestellte Mails</div></div></div>
+      <div class="type-row"><div class="k">Fließtext<span>Roboto 400 · 15/24 · 0</span></div><div><p style="max-width:62ch">Der Abgleich prüft, ob die Regeln die echten Störungen gemeldet hätten. Ohne bestandenen Abgleich gibt Scaleworks keine Empfehlung ab.</p></div></div>
+      <div class="type-row"><div class="k">Klein<span>Roboto 400 · 13/20 · 0</span></div><div><p style="font-size:13px;line-height:20px;color:var(--ink-2);max-width:62ch">Grundlage: 1 180 von 1 284 nachgespielten Fenstern haben ein Gegenstück im Postfach.</p></div></div>
+      <div class="type-row"><div class="k">Kategorie‑Wort<span>Roboto 700 · 11/16 · +0,12 em · Versal</span></div><div><div class="eyebrow">Abgleich · Schritt 6 von 7</div></div></div>
+      <div class="type-row"><div class="k">Zahl<span>Roboto 500 · 34/40 · −0,5 px · tabular</span></div><div><div style="font-size:34px;font-weight:500;line-height:40px;letter-spacing:-.5px;font-variant-numeric:tabular-nums lining-nums">1 284 · 83 % · ≥ 7</div></div></div>
+      <div class="type-row"><div class="k">Technisch<span>Roboto Mono 400 · 13/20</span></div><div><div style="font-family:var(--mono);font-size:13px;line-height:20px">xetra_match_latency_p99 &gt; 250ms for 5m</div></div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Maße</h3>
+    <div class="card" style="margin-top:16px"><div class="card-body"><div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>Größe</th><th>Wert</th><th>Verwendung</th></tr></thead>
+        <tbody>
+          <tr><td>Abstandsreihe</td><td class="ratio">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64</td><td>Alle Abstände stammen aus dieser Reihe</td></tr>
+          <tr><td>Eckradien</td><td class="ratio">0 · 2 · 4</td><td>0 Linien und Kappen · 2 Knopf, Eingabe, Abzeichen, Meldung · 4 Karte</td></tr>
+          <tr><td>Rahmenstärken</td><td class="ratio">1 · 2 · 3</td><td>1 Karte und Zeile · 2 Fehlerrahmen, Tabellenkopf, Kennzahl‑Linie · 3 linke Kante der Meldung, Kappe des Schritts</td></tr>
+          <tr><td>Kartenpolsterung</td><td class="ratio">Kopf 20/24 · Inhalt 24 · Fuß 16/24</td><td>Trennlinien 1 px in Gold‑Rand</td></tr>
+          <tr><td>Maximale Inhaltsbreite</td><td class="ratio">1120 px</td><td>Seitenpolsterung 32 px · Spaltenabstand 24 px</td></tr>
+          <tr><td>Textbreite</td><td class="ratio">62–68 Zeichen</td><td>Fließtext 62 · Grundlagenzeile 44 · Aufklapptext 68</td></tr>
+        </tbody>
+      </table>
+    </div></div></div>
+  </div>
+</section>
+
+</div>
