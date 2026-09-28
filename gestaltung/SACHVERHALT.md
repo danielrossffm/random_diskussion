@@ -21,6 +21,7 @@ Stand: 28.09.2026. Alle Rechtsaussagen sind auf die Rechtslage 2026 zu prüfen.
 - Folge nach Ausgangslage: Bruchteilsgemeinschaft = gewerbliches Besitzunternehmen
   (Mitunternehmerschaft); Anteile an DR-GmbH und TR-UG = notwendiges SBV II
   (BFH IV R 17/17 v. 28.05.2020) – diese Einordnung ist zu verifizieren, nicht zu übernehmen.
+  Korrektur (Runde 3): Das Schenkungsteuer-Urteil v. 10.04.2024 ist BFH II R 22/21 (nicht II R 2/21).
 
 ## Offene Sachverhaltspunkte – ALLE Varianten parallel rechnen und kennzeichnen
 - F1: Alle acht Wohnungen an DTR (Var. F1-a) oder nur fünf, drei an fremde Dritte (Var. F1-b)?

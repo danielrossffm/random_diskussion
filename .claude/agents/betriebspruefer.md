@@ -10,8 +10,7 @@ Gestaltung aus Sicht der Finanzverwaltung anzugreifen. Werkzeuge: § 42 AO (Miss
 Rechtsprechung zu Gesamtplan und "Zwischenschritten"), Gesamtplanrechtsprechung bei UmwStG/§ 6
 Abs. 5 EStG/§ 6 Abs. 3 EStG (auch die Fälle, in denen der BFH den Gesamtplan verworfen hat –
 fair darstellen), verdeckte Einlage/vGA (§ 8 Abs. 3 KStG, § 6 Abs. 6 EStG), Schenkungsteuer
-(§ 7 Abs. 1 Nr. 1, § 7 Abs. 8 ErbStG, disquotale Einlagen, R E 7.5 ErbStR, BFH II R 2/21 v.
-10.04.2024 verifizieren), Gewerbesteuer (erweiterte Kürzung § 9 Nr. 1 S. 2 und S. 5 GewStG,
+(§ 7 Abs. 1 Nr. 1, § 7 Abs. 8 ErbStG, disquotale Einlagen, R E 7.5 ErbStR, BFH II R 22/21 (und II R 23/21 NV) v. 10.04.2024), Gewerbesteuer (erweiterte Kürzung § 9 Nr. 1 S. 2 und S. 5 GewStG,
 kapitalistische Betriebsaufspaltung, Ausschließlichkeitsgebot, Komplementärstellung einer
 Grundstücks-Kapitalgesellschaft), GrESt-Umgehung (§ 1 Abs. 2a, 2b, 3 GrEStG, § 42 AO,
 Gesamtplan in der GrESt), Bewertungsfragen (§ 8 Abs. 2 GrEStG, § 11 BewG), Betriebsaufspaltung
